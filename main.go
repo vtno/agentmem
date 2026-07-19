@@ -38,7 +38,6 @@ type page struct {
 	// Nav is the active primary nav key.
 	Nav string
 	Home bool
-	Wide bool
 	// Markdown is the path for the "Markdown" footer link.
 	Markdown string
 	// Prev / Next paths for footer (labels come from i18n).
@@ -71,7 +70,6 @@ var routes = map[string]page{
 	"/docs/install": {
 		Content:  "install",
 		Nav:      "install",
-		Wide:     true,
 		Markdown: "docs/install.md",
 		Prev:     "/",
 		PrevKey:  "home",
@@ -81,7 +79,6 @@ var routes = map[string]page{
 	"/docs/commands": {
 		Content:  "commands",
 		Nav:      "commands",
-		Wide:     true,
 		Markdown: "docs/commands.md",
 		Prev:     "/docs/install",
 		PrevKey:  "install",
@@ -91,7 +88,6 @@ var routes = map[string]page{
 	"/docs/integrations": {
 		Content:  "integrations",
 		Nav:      "integrations",
-		Wide:     true,
 		Markdown: "docs/integrations.md",
 		Prev:     "/docs/commands",
 		PrevKey:  "commands",
@@ -101,7 +97,6 @@ var routes = map[string]page{
 	"/docs/how-it-works": {
 		Content:  "how-it-works",
 		Nav:      "how-it-works",
-		Wide:     true,
 		Markdown: "docs/how-it-works.md",
 		Prev:     "/docs/integrations",
 		PrevKey:  "integrations",

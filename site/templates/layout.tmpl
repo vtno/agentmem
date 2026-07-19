@@ -7,12 +7,12 @@
 <meta name="description" content="{{.T "description"}}">
 <script>
 (function () {
+  /* Only lock theme when the user has toggled; otherwise follow system. */
   try {
     var t = localStorage.getItem("agentmem-theme");
-    if (t !== "light" && t !== "dark") {
-      t = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    if (t === "light" || t === "dark") {
+      document.documentElement.setAttribute("data-theme", t);
     }
-    document.documentElement.setAttribute("data-theme", t);
   } catch (e) {}
 })();
 </script>
@@ -31,7 +31,7 @@
   data-label-dark="{{.T "common.theme.to_dark"}}"
   aria-label="{{.T "common.theme.to_dark"}}"
 ></button>
-<div id="main" class="wrap{{if .Wide}} wrap--wide{{end}}" preload="mouseover">
+<div id="main" class="wrap" preload="mouseover">
 
   {{template "header" .}}
 

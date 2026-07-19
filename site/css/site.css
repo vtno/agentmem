@@ -29,8 +29,8 @@
   --leading-relaxed: 1.7;
 }
 
-/* Manual theme via data-theme on <html> (set early in layout + theme toggle).
- * Prefers-color-scheme applies only when no explicit choice is stored yet. */
+/* Explicit theme from toggle (localStorage). Default: follow system via
+ * prefers-color-scheme when html has no data-theme. */
 html[data-theme="dark"] {
   --bg: #141413;
   --fg: #e6e4de;
@@ -128,13 +128,9 @@ body {
 }
 
 .wrap {
-  max-width: 36rem;
+  max-width: 40rem;
   margin: 0 auto;
   width: 100%;
-}
-
-.wrap--wide {
-  max-width: 40rem;
 }
 
 /* Header */

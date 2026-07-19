@@ -117,13 +117,23 @@
     }
   }
 
-  function currentTheme() {
+  function hasExplicitTheme() {
     var t = document.documentElement.getAttribute("data-theme");
-    if (t === "light" || t === "dark") return t;
+    return t === "light" || t === "dark";
+  }
+
+  function systemTheme() {
     try {
       if (window.matchMedia("(prefers-color-scheme: dark)").matches) return "dark";
     } catch (e) {}
     return "light";
+  }
+
+  function currentTheme() {
+    if (hasExplicitTheme()) {
+      return document.documentElement.getAttribute("data-theme");
+    }
+    return systemTheme();
   }
 
   function applyTheme(theme) {
@@ -154,6 +164,15 @@
     btn.addEventListener("click", function () {
       applyTheme(currentTheme() === "dark" ? "light" : "dark");
     });
+    /* While following system, keep the icon in sync if OS theme changes. */
+    try {
+      var mq = window.matchMedia("(prefers-color-scheme: dark)");
+      var onChange = function () {
+        if (!hasExplicitTheme()) syncThemeButton(systemTheme());
+      };
+      if (mq.addEventListener) mq.addEventListener("change", onChange);
+      else if (mq.addListener) mq.addListener(onChange);
+    } catch (e) {}
   }
 
   function onReady() {
