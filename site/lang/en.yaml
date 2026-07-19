@@ -5,6 +5,9 @@
 
 common:
   brand: agentmem
+  theme:
+    to_light: Switch to light mode
+    to_dark: Switch to dark mode
   nav:
     install: Install
     commands: Commands

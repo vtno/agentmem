@@ -29,8 +29,25 @@
   --leading-relaxed: 1.7;
 }
 
+/* Manual theme via data-theme on <html> (set early in layout + theme toggle).
+ * Prefers-color-scheme applies only when no explicit choice is stored yet. */
+html[data-theme="dark"] {
+  --bg: #141413;
+  --fg: #e6e4de;
+  --muted: rgba(230, 228, 222, 0.55);
+  --border: rgba(230, 228, 222, 0.16);
+  --code-bg: rgba(230, 228, 222, 0.06);
+  --invert-bg: #e6e4de;
+  --invert-fg: #141413;
+  color-scheme: dark;
+}
+
+html[data-theme="light"] {
+  color-scheme: light;
+}
+
 @media (prefers-color-scheme: dark) {
-  :root {
+  html:not([data-theme]) {
     --bg: #141413;
     --fg: #e6e4de;
     --muted: rgba(230, 228, 222, 0.55);
@@ -38,6 +55,7 @@
     --code-bg: rgba(230, 228, 222, 0.06);
     --invert-bg: #e6e4de;
     --invert-fg: #141413;
+    color-scheme: dark;
   }
 }
 
@@ -52,6 +70,48 @@ html {
   font-size: 13px;
   color-scheme: light dark;
   -webkit-text-size-adjust: 100%;
+}
+
+/* Fixed square theme control — top-right viewport corner */
+.theme-toggle {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  margin: 0;
+  color: var(--fg);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  line-height: 0;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.theme-toggle__icon {
+  display: block;
+  width: 14px;
+  height: 14px;
+  pointer-events: none;
+}
+
+.theme-toggle:hover {
+  background: var(--invert-bg);
+  color: var(--invert-fg);
+  border-color: var(--invert-bg);
+}
+
+.theme-toggle:focus {
+  outline: none;
+  box-shadow: 0 0 0 1px var(--border);
+}
+
+.theme-toggle:focus:not(:focus-visible) {
+  box-shadow: none;
 }
 
 body {

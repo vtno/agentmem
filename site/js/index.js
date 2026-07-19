@@ -1,11 +1,13 @@
 /**
- * agentmem site — enhance code blocks with a copy icon button.
- * Works on full load and after htmx #main swaps.
+ * agentmem site — code copy buttons + theme toggle.
+ * Copy enhance runs on full load and after htmx #main swaps.
+ * Theme control lives outside #main so it survives swaps.
  */
 (function () {
   "use strict";
 
   var ATTR = "data-copy-ready";
+  var THEME_KEY = "agentmem-theme";
 
   var ICON_COPY =
     '<svg class="copy-btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true">' +
@@ -16,6 +18,19 @@
   var ICON_CHECK =
     '<svg class="copy-btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true">' +
     '<path d="M20 6L9 17l-5-5"/>' +
+    "</svg>";
+
+  /* Sun — shown in dark mode (action: switch to light) */
+  var ICON_SUN =
+    '<svg class="theme-toggle__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true">' +
+    '<circle cx="12" cy="12" r="4"/>' +
+    '<path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>' +
+    "</svg>";
+
+  /* Moon — shown in light mode (action: switch to dark) */
+  var ICON_MOON =
+    '<svg class="theme-toggle__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true">' +
+    '<path d="M21 14.5A8.5 8.5 0 0 1 9.5 3 7 7 0 1 0 21 14.5z"/>' +
     "</svg>";
 
   function textOf(block) {
@@ -102,7 +117,47 @@
     }
   }
 
+  function currentTheme() {
+    var t = document.documentElement.getAttribute("data-theme");
+    if (t === "light" || t === "dark") return t;
+    try {
+      if (window.matchMedia("(prefers-color-scheme: dark)").matches) return "dark";
+    } catch (e) {}
+    return "light";
+  }
+
+  function applyTheme(theme) {
+    document.documentElement.setAttribute("data-theme", theme);
+    try {
+      localStorage.setItem(THEME_KEY, theme);
+    } catch (e) {}
+    syncThemeButton(theme);
+  }
+
+  function syncThemeButton(theme) {
+    var btn = document.getElementById("theme-toggle");
+    if (!btn) return;
+    var isDark = theme === "dark";
+    btn.innerHTML = isDark ? ICON_SUN : ICON_MOON;
+    var label = isDark
+      ? btn.getAttribute("data-label-light") || "Switch to light mode"
+      : btn.getAttribute("data-label-dark") || "Switch to dark mode";
+    btn.setAttribute("aria-label", label);
+    btn.setAttribute("title", label);
+  }
+
+  function initThemeToggle() {
+    var btn = document.getElementById("theme-toggle");
+    if (!btn || btn.getAttribute("data-theme-ready") === "1") return;
+    btn.setAttribute("data-theme-ready", "1");
+    syncThemeButton(currentTheme());
+    btn.addEventListener("click", function () {
+      applyTheme(currentTheme() === "dark" ? "light" : "dark");
+    });
+  }
+
   function onReady() {
+    initThemeToggle();
     enhanceAll(document);
   }
 

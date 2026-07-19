@@ -5,6 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{.T "title"}}</title>
 <meta name="description" content="{{.T "description"}}">
+<script>
+(function () {
+  try {
+    var t = localStorage.getItem("agentmem-theme");
+    if (t !== "light" && t !== "dark") {
+      t = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    document.documentElement.setAttribute("data-theme", t);
+  } catch (e) {}
+})();
+</script>
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/css/site.css">
 <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.10/dist/htmx.min.js" integrity="sha384-H5SrcfygHmAuTDZphMHqBJLc3FhssKjG7w/CeCpFReSfwBWDTKpkzPP8c+cLsK+V" crossorigin="anonymous"></script>
@@ -12,6 +23,14 @@
 <meta name="htmx-config" content='{"defaultSwapDelay":0,"defaultSettleDelay":0,"historyCacheSize":20}'>
 </head>
 <body hx-boost="true" hx-ext="preload" hx-target="#main" hx-select="#main" hx-swap="innerHTML show:window:top settle:0 swap:0">
+<button
+  type="button"
+  class="theme-toggle"
+  id="theme-toggle"
+  data-label-light="{{.T "common.theme.to_light"}}"
+  data-label-dark="{{.T "common.theme.to_dark"}}"
+  aria-label="{{.T "common.theme.to_dark"}}"
+></button>
 <div id="main" class="wrap{{if .Wide}} wrap--wide{{end}}" preload="mouseover">
 
   {{template "header" .}}
