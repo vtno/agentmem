@@ -1,0 +1,18 @@
+{{define "header"}}
+  <header class="site-header">
+    <h1><a href="/">{{.T "common.brand"}}</a></h1>
+    {{if .Home}}
+    <p class="tagline">{{.T "tagline"}}</p>
+    {{else}}
+    <p class="crumb"><a href="/">{{.T "common.crumb.home"}}</a> · {{.T "common.crumb.docs"}} / {{.T "heading"}}</p>
+    {{end}}
+    <nav class="site-nav" aria-label="{{.T "common.nav.aria"}}">
+      <a href="/docs/install"{{if eq .Nav "install"}} aria-current="page"{{end}}>{{.T "common.nav.install"}}</a>
+      <a href="/docs/commands"{{if eq .Nav "commands"}} aria-current="page"{{end}}>{{.T "common.nav.commands"}}</a>
+      <a href="/docs/integrations"{{if eq .Nav "integrations"}} aria-current="page"{{end}}>{{.T "common.nav.integrations"}}</a>
+      <a href="/docs/how-it-works"{{if eq .Nav "how-it-works"}} aria-current="page"{{end}}>{{.T "common.nav.how_it_works"}}</a>
+      <a href="https://github.com/vtno/agentmem/releases">{{.T "common.nav.releases"}}</a>
+      {{if .Home}}<a href="https://github.com/vtno/agentmem/issues">{{.T "common.nav.issues"}}</a>{{end}}
+    </nav>
+  </header>
+{{end}}

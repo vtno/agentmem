@@ -1,0 +1,52 @@
+{{define "install"}}
+  <p class="doc-title">{{.T "heading"}}</p>
+  <p class="doc-lead">{{.T "lead"}}</p>
+
+  <section class="section">
+    <div class="section__label">{{.T "recommended.label"}}</div>
+    <p>{{.T "recommended.oneliner"}}</p>
+    <pre><code>{{.T "recommended.cmd"}}</code></pre>
+    <p class="muted">{{.T "recommended.note"}}</p>
+  </section>
+
+  <section class="section">
+    <div class="section__label">{{.T "platforms.label"}}</div>
+    <ul class="list">
+      <li>{{.T "platforms.macos"}}</li>
+      <li>{{.T "platforms.linux"}}</li>
+      <li>{{.T "platforms.windows"}}</li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <div class="section__label">{{.T "manual.label"}}</div>
+    <ol class="steps">
+      <li>{{.T "manual.step1"}}</li>
+      <li>{{.T "manual.step2"}}</li>
+      <li>{{.T "manual.step3"}}</li>
+      <li>{{.T "manual.step4"}}</li>
+    </ol>
+    <p class="muted">{{.T "manual.note"}}</p>
+  </section>
+
+  <section class="section">
+    <div class="section__label">{{.T "wire.label"}}</div>
+    <p>{{.T "wire.official"}}</p>
+    <pre><code>{{.T "wire.official_cmd"}}</code></pre>
+    <p>{{.T "wire.mcp"}}</p>
+    <pre><code>{{.T "wire.mcp_cmd"}}</code></pre>
+    <p>{{.T "wire.other"}}</p>
+    <pre><code>{{.T "wire.other_cmd"}}</code></pre>
+    <p>{{.T "wire.remove"}}</p>
+    <pre><code>{{.T "wire.remove_cmd"}}</code></pre>
+    <p class="muted">{{.T "wire.note"}}</p>
+  </section>
+
+  <section class="section">
+    <div class="section__label">{{.T "config.label"}}</div>
+    <ul class="list">
+      <li>{{.T "config.dir"}}</li>
+      <li>{{.T "config.env"}}</li>
+    </ul>
+  </section>
+{{end}}

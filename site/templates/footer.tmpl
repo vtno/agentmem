@@ -1,0 +1,21 @@
+{{define "footer"}}
+  <footer class="site-footer">
+    <p>{{.T "common.footer.free"}}</p>
+    {{if or .Prev .Next}}
+    <p>
+      {{if .Prev}}<a href="{{.Prev}}">{{.T (printf "common.prev.%s" .PrevKey)}}</a>{{end}}
+      {{if and .Prev .Next}} · {{end}}
+      {{if .Next}}<a href="{{.Next}}">{{.T (printf "common.next.%s" .NextKey)}}</a>{{end}}
+    </p>
+    {{end}}
+    <p>
+      <a href="https://github.com/vtno/agentmem">{{.T "common.footer.github"}}</a>
+      ·
+      <a href="https://github.com/vtno/agentmem/releases">{{.T "common.footer.releases"}}</a>
+      {{if .Markdown}}
+      ·
+      <a href="/{{.Markdown}}" hx-boost="false">{{.T "common.footer.markdown"}}</a>
+      {{end}}
+    </p>
+  </footer>
+{{end}}

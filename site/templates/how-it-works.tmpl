@@ -1,0 +1,40 @@
+{{define "how-it-works"}}
+  <p class="doc-title">{{.T "heading"}}</p>
+  <p class="doc-lead">{{.T "lead"}}</p>
+
+  <section class="section">
+    <div class="section__label">{{.T "storage.label"}}</div>
+    <p>{{.T "storage.intro"}}</p>
+    <pre><code>{{.T "storage.tree"}}</code></pre>
+    <p>{{.T "storage.note"}}</p>
+  </section>
+
+  <section class="section">
+    <div class="section__label">{{.T "files.label"}}</div>
+    <p>{{.T "files.body"}}</p>
+    <pre><code>{{.T "files.example"}}</code></pre>
+    <p class="muted">{{.T "files.note"}}</p>
+  </section>
+
+  <section class="section">
+    <div class="section__label">{{.T "index.label"}}</div>
+    <p>{{.T "index.body"}}</p>
+  </section>
+
+  <section class="section">
+    <div class="section__label">{{.T "ui.label"}}</div>
+    <p>{{.T "ui.body"}}</p>
+    <pre><code>{{.T "ui.cmd"}}</code></pre>
+  </section>
+
+  <section class="section">
+    <div class="section__label">{{.T "philosophy.label"}}</div>
+    <ul class="list">
+      <li><strong>{{.T "philosophy.yours_title"}}</strong> — {{.T "philosophy.yours_body"}}</li>
+      <li><strong>{{.T "philosophy.pluggable_title"}}</strong> — {{.T "philosophy.pluggable_body"}}</li>
+      <li><strong>{{.T "philosophy.portable_title"}}</strong> — {{.T "philosophy.portable_body"}}</li>
+      <li><strong>{{.T "philosophy.small_title"}}</strong> — {{.T "philosophy.small_body"}}</li>
+      <li><strong>{{.T "philosophy.vectorless_title"}}</strong> — {{.T "philosophy.vectorless_body"}}</li>
+    </ul>
+  </section>
+{{end}}

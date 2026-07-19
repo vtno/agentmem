@@ -1,0 +1,108 @@
+{{define "commands"}}
+  <p class="doc-title">{{.T "heading"}}</p>
+  <p class="doc-lead">{{.T "lead"}}</p>
+
+  <section class="section">
+    <div class="section__label">{{.T "browse.label"}}</div>
+
+    <details class="cmd-block" open>
+      <summary><code>{{.T "browse.list_title"}}</code></summary>
+      <div class="body">
+        <p>{{.T "browse.list_body"}}</p>
+        <pre><code>{{.T "browse.list_cmd"}}</code></pre>
+      </div>
+    </details>
+
+    <details class="cmd-block">
+      <summary><code>{{.T "browse.show_title"}}</code></summary>
+      <div class="body">
+        <p>{{.T "browse.show_body"}}</p>
+        <pre><code>{{.T "browse.show_cmd"}}</code></pre>
+      </div>
+    </details>
+
+    <details class="cmd-block">
+      <summary><code>{{.T "browse.search_title"}}</code></summary>
+      <div class="body">
+        <p>{{.T "browse.search_body"}}</p>
+        <pre><code>{{.T "browse.search_cmd"}}</code></pre>
+      </div>
+    </details>
+  </section>
+
+  <section class="section">
+    <div class="section__label">{{.T "write.label"}}</div>
+
+    <details class="cmd-block" open>
+      <summary><code>{{.T "write.add_title"}}</code></summary>
+      <div class="body">
+        <p>{{.T "write.add_body"}}</p>
+        <pre><code>{{.T "write.add_cmd"}}</code></pre>
+      </div>
+    </details>
+
+    <details class="cmd-block">
+      <summary><code>{{.T "write.edit_title"}}</code></summary>
+      <div class="body">
+        <p>{{.T "write.edit_body"}}</p>
+        <pre><code>{{.T "write.edit_cmd"}}</code></pre>
+      </div>
+    </details>
+
+    <details class="cmd-block">
+      <summary><code>{{.T "write.rm_title"}}</code></summary>
+      <div class="body">
+        <p>{{.T "write.rm_body"}}</p>
+        <pre><code>{{.T "write.rm_cmd"}}</code></pre>
+      </div>
+    </details>
+
+    <details class="cmd-block">
+      <summary><code>{{.T "write.reindex_title"}}</code></summary>
+      <div class="body">
+        <p>{{.T "write.reindex_body"}}</p>
+        <pre><code>{{.T "write.reindex_cmd"}}</code></pre>
+      </div>
+    </details>
+  </section>
+
+  <section class="section">
+    <div class="section__label">{{.T "serve.label"}}</div>
+
+    <details class="cmd-block">
+      <summary><code>{{.T "serve.serve_title"}}</code></summary>
+      <div class="body">
+        <p>{{.T "serve.serve_body"}}</p>
+        <pre><code>{{.T "serve.serve_cmd"}}</code></pre>
+      </div>
+    </details>
+
+    <details class="cmd-block">
+      <summary><code>{{.T "serve.ui_title"}}</code></summary>
+      <div class="body">
+        <p>{{.T "serve.ui_body"}}</p>
+        <pre><code>{{.T "serve.ui_cmd"}}</code></pre>
+      </div>
+    </details>
+  </section>
+
+  <section class="section">
+    <div class="section__label">{{.T "harness.label"}}</div>
+
+    <details class="cmd-block" open>
+      <summary><code>{{.T "harness.install_title"}}</code></summary>
+      <div class="body">
+        <p>{{.T "harness.install_body"}}</p>
+        <pre><code>{{.T "harness.install_cmd"}}</code></pre>
+      </div>
+    </details>
+
+    <details class="cmd-block">
+      <summary><code>{{.T "harness.targets_title"}}</code></summary>
+      <div class="body">
+        <p>{{.T "harness.targets_body"}}</p>
+        <pre><code>{{.T "harness.targets_cmd"}}</code></pre>
+      </div>
+    </details>
+  </section>
+{{end}}

@@ -1,0 +1,33 @@
+agentmem License
+
+Copyright (c) 2026 agentmem contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+the agentmem binary and accompanying documentation (the "Software"), to use the
+Software for any personal or commercial purpose, including running, copying,
+and installing the unmodified binary, subject to the following conditions:
+
+1. Source code is not licensed under this grant. The source remains proprietary
+   and is not provided under an open-source license.
+
+2. You may not reverse engineer, decompile, or disassemble the Software except
+   to the extent that such restriction is prohibited by applicable law.
+
+3. You may not redistribute modified versions of the Software, or sell the
+   Software as a standalone product, without prior written permission.
+
+4. Redistribution of the unmodified binary is permitted only when this license
+   notice is included and the binary is not misrepresented as official if it
+   has been altered in packaging only as required by a package manager.
+
+5. The name "agentmem" and the binary name "memory" may not be used to endorse
+   or promote products derived from this Software without prior written
+   permission.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM,
+OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

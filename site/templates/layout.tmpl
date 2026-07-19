@@ -1,0 +1,32 @@
+{{define "layout"}}<!DOCTYPE html>
+<html lang="{{.LangTag}}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{.T "title"}}</title>
+<meta name="description" content="{{.T "description"}}">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/css/site.css">
+<script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.10/dist/htmx.min.js" integrity="sha384-H5SrcfygHmAuTDZphMHqBJLc3FhssKjG7w/CeCpFReSfwBWDTKpkzPP8c+cLsK+V" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/htmx-ext-preload@2.1.2" integrity="sha384-PRIcY6hH1Y5784C76/Y8SqLyTanY9rnI3B8F3+hKZFNED55hsEqMJyqWhp95lgfk" crossorigin="anonymous"></script>
+<meta name="htmx-config" content='{"defaultSwapDelay":0,"defaultSettleDelay":0,"historyCacheSize":20}'>
+</head>
+<body hx-boost="true" hx-ext="preload" hx-target="#main" hx-select="#main" hx-swap="innerHTML show:window:top settle:0 swap:0">
+<div id="main" class="wrap{{if .Wide}} wrap--wide{{end}}" preload="mouseover">
+
+  {{template "header" .}}
+
+  {{if eq .Content "index"}}{{template "index" .}}
+  {{else if eq .Content "install"}}{{template "install" .}}
+  {{else if eq .Content "commands"}}{{template "commands" .}}
+  {{else if eq .Content "integrations"}}{{template "integrations" .}}
+  {{else if eq .Content "how-it-works"}}{{template "how-it-works" .}}
+  {{end}}
+
+  {{template "footer" .}}
+
+</div>
+<script src="/js/index.js"></script>
+</body>
+</html>
+{{end}}

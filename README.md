@@ -1,55 +1,123 @@
 # agentmem
 
-**Dead simple memory for coding agents.**
+**Vectorless memory for AI agents.**
 
-`agentmem` gives your agent a tiny, durable memory folder it can read and update with plain shell commands. No database. No Docker. No daemon. Just markdown files and one `memory` binary.
+Agents forget. Worse: when memory lives inside a model provider or a single harness, your conventions, decisions, and project knowledge leave with the product.
 
-## Why
+`agentmem` is a pluggable memory layer you own. Plain markdown on your machine, one `memory` binary, wired into any agent that can run shell or MCP — so the memory stays yours when you switch tools.
 
-Agents forget useful things: project conventions, user preferences, gotchas, decisions, and feedback. `agentmem` makes remembering boring:
+**Free for personal and commercial use. Source is private.** This repository holds the documentation site, issue tracker, and release binaries.
+
+## Install
 
 ```bash
-memory list
-memory show project/conventions
-memory add --file project/conventions --summary "[project] Go conventions" "Wrap errors. Keep comments rare."
+curl -fsSL https://agentmem.thamtech.co/install | sh
 ```
 
-## Dead Simple Integration
+Or download the latest binary from [GitHub Releases](https://github.com/vtno/agentmem/releases).
 
-Install the binary, then wire it into your agent:
+### Wire a harness
+
+Official (skill + enforcement hooks/plugins):
 
 ```bash
 memory install claude-code
-# or
 memory install opencode
 ```
 
-That's it. The installer drops in the right skill/plugin files so the agent knows to check memory at the start of real tasks and save new facts when work is done.
-
-For agents that prefer MCP:
+MCP (plus the same hooks/plugins on official targets):
 
 ```bash
 memory install --mcp claude-code
 memory install --mcp opencode
 ```
 
-## How It Works
+Other / skill-capable harnesses (portable skill only — no hooks or plugins):
 
-Everything lives in `~/.agentmem/` by default:
-
-```text
-~/.agentmem/
-  MEMORY.md
-  notes.md
-  project/
-    conventions.md
-  user/
-    prefs.md
+```bash
+memory install skill
+# optional custom skills root:
+memory install skill --dir /path/to/skills
 ```
 
-Each memory is a markdown file. `MEMORY.md` is a generated index from each file's summary line, so agents can quickly browse what exists before opening details.
+Default skill path: `~/.agents/skills/memory/SKILL.md` (shared with OpenCode’s skill root).
 
-## Core Commands
+Check status: `memory targets`.
+
+## Why
+
+- **Yours** — markdown files on disk, not locked in a provider account
+- **Pluggable** — skill or MCP into the harness you already use
+- **Portable** — switch agents; keep the same memory folder
+- **Vectorless** — no embeddings, no daemon, no cloud required
+
+## Docs site
+
+A small Go server embeds the entire [`site/`](site/) tree (`//go:embed`) into one portable binary — templates, CSS, JS, assets, language packs, and Markdown.
+
+### i18n
+
+All UI copy lives in YAML under `site/lang/`. Root keys are **page names** (`common`, `index`, `install`, `commands`, `integrations`, `how_it_works`).
+
+```yaml
+# site/lang/en.yaml
+common:
+  nav:
+    install: Install
+index:
+  title: "agentmem — vectorless memory for AI agents"
+  tagline: Vectorless memory for AI agents
+```
+
+Templates call `{{.T "key"}}` (page-local, then `common`) or absolute paths `{{.T "common.nav.install"}}`.
+
+Language selection (first match wins):
+
+1. `?lang=en`
+2. Cookie `lang=en`
+3. `Accept-Language`
+4. Default `en`
+
+Add a locale by copying `site/lang/en.yaml` → `site/lang/<code>.yaml` and translating values.
+
+| Route | |
+|-------|--|
+| `/` | Landing |
+| `/docs/install` | Binary + harness wiring |
+| `/docs/commands` | CLI reference |
+| `/docs/integrations` | Claude Code, OpenCode, other harnesses |
+| `/docs/how-it-works` | Storage, index, local UI |
+| `/*.md` / `/docs/*.md` | Same pages as Markdown (`Content-Type: text/markdown`) |
+
+### Makefile
+
+```bash
+make build                 # → ./agentmem-site
+make install               # → ~/.local/bin/agentmem-site
+make run                   # go run . -addr :5555  (ADDR=:8080 to override)
+make test
+make fmt
+VERSION=0.1.0 make build   # stamp version into binary
+./agentmem-site -version
+```
+
+### Manual build / run
+
+```bash
+# preview (rebuilds embed from site/)
+go run . -addr :5555
+
+# portable binary (no site/ dir needed at runtime)
+make build
+./agentmem-site -addr :5555
+# ship only agentmem-site to the server
+```
+
+Layout: `site/templates/` (`layout`, `header`, `footer` + page bodies).  
+Static: `site/css`, `site/js`, `site/assets`. Markdown: `site/index.md`, `site/docs/*.md`.  
+Content changes require a rebuild so they are re-embedded.
+
+## Core commands
 
 ```bash
 memory list [prefix]          # show the memory index, optionally scoped
@@ -61,34 +129,31 @@ memory edit <name>            # open in $EDITOR
 memory rm <name>              # delete a memory
 memory reindex                # rebuild MEMORY.md
 memory serve                  # MCP server over stdio
-memory targets                # supported harnesses + install status
+memory ui                     # local loopback web UI
+memory install <harness>      # skill + hooks/plugins (claude-code, opencode)
+memory install --mcp <harness>
+memory install skill [--dir <dir>]
+memory uninstall …
+memory targets                # harness + skill install status
 ```
 
-Names can use `/` for folders, e.g. `project/api` or `user/prefs`. On Windows, `\` is accepted and normalized.
+## How it works
 
-## Install
+Everything lives in `~/.agentmem/` by default (override with `AGENTMEM_DIR`). Each memory is a markdown file. `MEMORY.md` is a generated index from each file’s summary line. Files are the source of truth.
 
-```bash
-curl -fsSL https://agentmem.thamtech.co/install | sh
-```
+## Supported harnesses
 
-Then wire it into your agent:
+| Target | What you get |
+|--------|----------------|
+| **Claude Code** (official) | Skill + SessionStart hook · optional MCP |
+| **OpenCode** (official) | Skill + plugin · optional MCP |
+| **skill** (portable) | Skill only under `~/.agents/skills` — no enforcement |
 
-```bash
-memory install claude-code
-# or
-memory install opencode
-```
+## Issues & releases
 
-Prefer manual install? Download the latest binary from GitHub Releases.
+- Bugs and features: [GitHub Issues](https://github.com/vtno/agentmem/issues)
+- Binaries: [GitHub Releases](https://github.com/vtno/agentmem/releases)
 
-## Philosophy
+## License
 
-- **Portable**: plain markdown, easy to inspect and edit
-- **Small**: one Go binary, fast startup
-- **Agent-friendly**: index first, files as source of truth
-- **No magic**: no vectors, no sync, no LLM calls inside the CLI
-
-## Status
-
-Early but usable. Supports Claude Code and OpenCode today.
+See [LICENSE](LICENSE). Free to use; source is not open.

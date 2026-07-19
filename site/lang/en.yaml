@@ -1,0 +1,340 @@
+# English strings for the agentmem site.
+# Root keys are page names (plus "common" for shared chrome).
+# Nested maps use dotted lookup in templates: {{ .T "common.nav.install" }}
+# Page-local keys omit the page prefix via {{ .T "title" }} (looks under current page, then common).
+
+common:
+  brand: agentmem
+  nav:
+    install: Install
+    commands: Commands
+    integrations: Integrations
+    how_it_works: How it works
+    releases: Releases
+    issues: Issues
+    aria: Primary
+  footer:
+    free: Free for personal and commercial use. Source private.
+    markdown: Markdown
+    home: Home
+    releases: releases
+    github: github.com/vtno/agentmem
+  crumb:
+    home: ← Home
+    docs: Docs
+  prev:
+    home: ← Home
+    install: ← Install
+    commands: ← Commands
+    integrations: ← Integrations
+  next:
+    commands: Commands →
+    integrations: Integrations →
+    how_it_works: How it works →
+    home: Home
+
+index:
+  title: "agentmem — vectorless memory for AI agents"
+  description: "Pluggable vectorless memory for any agent harness. Your markdown, your machine — not locked to a provider."
+  tagline: Vectorless memory for AI agents
+  hook_p1: >
+    Agents forget. Worse: when memory lives inside a model provider or a single harness,
+    your conventions, decisions, and project knowledge leave with the product.
+  hook_p2: >
+    agentmem is a pluggable memory layer you own. Plain markdown on your machine,
+    one memory binary, wired into any agent that can run shell or MCP — so the
+    memory stays yours when you switch tools.
+  install_cmd: "curl -fsSL https://agentmem.thamtech.co/install | sh"
+  cta_install: Installation Guide →
+  cta_releases: GitHub Releases
+  cta_issues: Report an issue
+  why:
+    label: Why
+    yours_title: Yours
+    yours_body: markdown files on disk, not locked in a provider account
+    pluggable_title: Pluggable
+    pluggable_body: skill or MCP install into the harness you already use
+    portable_title: Portable
+    portable_body: switch agents; keep the same memory folder
+    vectorless_title: Vectorless
+    vectorless_body: no embeddings, no daemon, no cloud required
+  quick_start:
+    label: Quick start
+    step1: Install the memory binary (curl script or Releases)
+    step2: "Plug in: memory install claude-code, opencode, or memory install skill for other harnesses"
+    step3: Agents read and write the same local store — your memory travels with you
+  harnesses:
+    label: Supported harnesses
+    claude_title: Claude Code
+    claude_desc: Official — skill + hook · optional MCP →
+    opencode_title: OpenCode
+    opencode_desc: Official — skill + plugin · optional MCP →
+    other_title: Other harnesses
+    other_desc: Skill only — memory install skill →
+  docs:
+    label: Docs
+    install_title: Install
+    install_desc: Platforms, curl script, manual download, harness wiring →
+    commands_title: Commands
+    commands_desc: CLI reference for list, add, search, ui, serve, and more →
+    integrations_title: Integrations
+    integrations_desc: Claude Code, OpenCode, skill vs MCP →
+    how_title: How it works
+    how_desc: Storage layout, MEMORY.md index, local UI →
+
+install:
+  title: "Install — agentmem"
+  description: Install the agentmem memory binary and wire Claude Code, OpenCode, or any skill-capable harness.
+  heading: Install
+  lead: >
+    Get the memory binary on your PATH, then plug in a harness. Official targets add
+    enforcement (hooks/plugins); other agents use the portable skill.
+  recommended:
+    label: Recommended
+    oneliner: "One-liner (macOS / Linux):"
+    cmd: "curl -fsSL https://agentmem.thamtech.co/install | sh"
+    note: >
+      The script detects your OS and architecture, downloads the matching release from
+      GitHub Releases, and installs memory to ~/.local/bin (or /usr/local/bin when available).
+  platforms:
+    label: Platforms
+    macos: macOS arm64 and amd64
+    linux: Linux amd64 and arm64
+    windows: Windows amd64 (zip from Releases; put memory.exe on PATH)
+  manual:
+    label: Manual install
+    step1: Open GitHub Releases and download the archive for your platform
+    step2: Extract the memory binary
+    step3: chmod +x memory and move it onto your PATH
+    step4: Verify with memory --help or memory targets
+    note: >
+      Checksums ship as checksums.txt on each release. Source install via
+      go install is not offered — the source repository is private.
+  wire:
+    label: Wire your agent
+    official: "Official harnesses (skill + enforcement):"
+    official_cmd: |
+      memory install claude-code
+      memory install opencode
+    mcp: "MCP (hooks/plugins still installed on official targets):"
+    mcp_cmd: |
+      memory install --mcp claude-code
+      memory install --mcp opencode
+    other: >
+      Other harnesses — portable skill only under ~/.agents/skills
+      (no hooks/plugins; skill is not a harness name):
+    other_cmd: |
+      memory install skill
+      memory install skill --dir /path/to/skills
+    remove: "Remove wiring later:"
+    remove_cmd: |
+      memory uninstall claude-code
+      memory uninstall --mcp opencode
+      memory uninstall skill
+    note: >
+      memory targets shows install status. See Integrations for what each mode writes.
+      Note: OpenCode's skill path is the same default as install skill
+      (~/.agents/skills) — intentional for compatibility.
+  config:
+    label: Configuration
+    dir: "Default memory directory: ~/.agentmem/"
+    env: Override with AGENTMEM_DIR
+
+commands:
+  title: "Commands — agentmem"
+  description: CLI reference for the agentmem memory binary.
+  heading: Commands
+  lead: >
+    The binary is named memory. Entry names may use / for folders
+    (e.g. project/api). On Windows, \ is accepted and normalized.
+  browse:
+    label: Browse
+    list_title: "memory list [prefix]"
+    list_body: Print the derived index (equivalent to MEMORY.md when up to date). Optional prefix scopes the list (e.g. project).
+    list_cmd: |
+      memory list
+      memory list project
+    show_title: "memory show <name>"
+    show_body: Print one memory file.
+    show_cmd: memory show project/conventions
+    search_title: "memory search <query>"
+    search_body: Full-text search across memories. Returns matching files and snippets.
+    search_cmd: memory search conventions
+  write:
+    label: Write
+    add_title: memory add
+    add_body: Append a quick note, or write a named file. Named files require --summary. Reads stdin when no text argument is given.
+    add_cmd: |
+      memory add "remember to run tests before push"
+      memory add --file project/conventions --summary "[project] Go conventions" "Wrap errors. Keep comments rare."
+      memory add --file user/prefs --summary "[user] short answers" <<'EOF'
+      Prefer terse replies. No preamble.
+      EOF
+    edit_title: "memory edit <name>"
+    edit_body: Open a memory file in $EDITOR.
+    edit_cmd: memory edit user/prefs
+    rm_title: "memory rm <name>"
+    rm_body: Delete a memory file and its index entry.
+    rm_cmd: memory rm scratch/old-idea
+    reindex_title: memory reindex
+    reindex_body: Rebuild MEMORY.md from memory files after hand edits.
+    reindex_cmd: memory reindex
+  serve:
+    label: Serve & UI
+    serve_title: memory serve
+    serve_body: Start the MCP server on stdio (spawned by harnesses that use MCP).
+    serve_cmd: memory serve
+    ui_title: memory ui
+    ui_body: Local browser UI to list, search, create, edit, and delete memories. Loopback only.
+    ui_cmd: |
+      memory ui
+      memory ui --addr 127.0.0.1:8787 --no-open
+  harness:
+    label: Harness
+    install_title: memory install / uninstall
+    install_body: >
+      Official harnesses: skill plus hooks/plugins by default; pass --mcp for MCP config
+      (hooks/plugins still applied). Portable skill target installs skill only under
+      ~/.agents/skills (or --dir) — no harness name, no hooks.
+    install_cmd: |
+      memory install claude-code
+      memory install --mcp opencode
+      memory install skill
+      memory install skill --dir /path/to/skills
+      memory uninstall claude-code
+      memory uninstall skill
+    targets_title: memory targets
+    targets_body: List supported harnesses and install status (skill, mcp, hook/plugin), plus the portable skill path.
+    targets_cmd: memory targets
+
+integrations:
+  title: "Integrations — agentmem"
+  description: Wire agentmem into Claude Code, OpenCode, or any skill-capable harness.
+  heading: Integrations
+  lead: >
+    Official harnesses get skill plus enforcement (hooks/plugins). Other shell-capable agents
+    can still use the shared skill — without that enforcement layer.
+  harnesses:
+    label: Harnesses
+    claude_title: Claude Code
+    claude_desc: Official — skill + hook · optional MCP →
+    opencode_title: OpenCode
+    opencode_desc: Official — skill + plugin · optional MCP →
+    other_title: Other harnesses
+    other_desc: Skill only — no hook/plugin enforcement →
+  claude:
+    label: Claude Code · official
+    body: >
+      Default install writes the memory skill and a SessionStart hook so the agent is reminded
+      to use memory across resume, clear, and compaction.
+    cmd: |
+      memory install claude-code
+      memory install --mcp claude-code
+    note: >
+      Skill path suits shell-capable sessions. MCP suits sandboxed or MCP-first setups.
+      The SessionStart hook is installed in both modes.
+  opencode:
+    label: OpenCode · official
+    body: >
+      Default install writes the skill and an OpenCode plugin for session hooks.
+      Use --mcp when you want the MCP server registered in OpenCode config.
+    cmd: |
+      memory install opencode
+      memory install --mcp opencode
+  other:
+    label: Other harnesses · skill only
+    body: >
+      Any agent that can load a skill and run shell commands can use agentmem
+      against the same local memory folder. There is no dedicated install target for these
+      harnesses — no SessionStart hook, no plugin, no automatic nudge to open or update memory.
+    install_intro: "Install the skill (and only the skill) automatically:"
+    cmd: |
+      memory install skill
+      # override skill directory (default: ~/.agents/skills):
+      memory install skill --dir /path/to/skills
+    path_note: >
+      skill is not a harness name — it installs the portable skill only.
+      Default path is under ~/.agents for maximum compatibility:
+      ~/.agents/skills/memory/SKILL.md. Use --dir to point at another
+      skills root. Point your harness at that skill, keep memory on
+      PATH, and you're done.
+    bullet_no_hook: No hook or plugin is installed — the agent is told how to use memory, not forced to
+    bullet_no_combo: Not combinable with a harness or --mcp (e.g. install skill claude-code errors)
+    bullet_mcp: "Optional: register memory serve as MCP if the harness is sandboxed"
+    bullet_rm: Remove later with memory uninstall skill (same --dir if you used one)
+    prefer: >
+      Prefer full official installs when you can — hooks and plugins keep memory discipline
+      consistent across resume, clear, and compaction. Default path matches OpenCode's skill
+      root; uninstall skill removes that shared skill file (an OpenCode plugin may remain).
+  skill_vs_mcp:
+    label: Skill vs MCP
+    skill: "Skill (default on harness) — agent runs shell memory … commands. Best when the harness has a real shell."
+    mcp: "MCP (--mcp) — agent calls tools over the MCP server (memory serve). Better for sandboxed or shell-less harnesses."
+    hooks: "Hooks / plugins — official harnesses only. They enforce “check memory / save facts”; portable install skill does not."
+    note: >
+      Check status anytime with memory targets. Remove with
+      memory uninstall [--mcp] <harness> or
+      memory uninstall skill.
+
+how_it_works:
+  title: "How it works — agentmem"
+  description: How agentmem stores memory as markdown files and a derived index.
+  heading: How it works
+  lead: >
+    Everything is a folder of markdown files you own. The CLI is a thin tool over that folder —
+    no database, no cloud, no embedding model. Harnesses plug in via skill, hooks, or MCP;
+    the store stays the same when you switch tools.
+  storage:
+    label: Storage
+    intro: "Default directory is ~/.agentmem/ (override with AGENTMEM_DIR):"
+    tree: |
+      ~/.agentmem/
+        MEMORY.md              ← generated index
+        notes.md
+        project/
+          conventions.md
+        user/
+          prefs.md
+    note: >
+      Names may contain / to group related memories. The on-disk tree is organization;
+      the logical index always lists the full set of entries.
+  files:
+    label: Memory files
+    body: >
+      Each entry is plain markdown. An optional first-line summary blockquote is the
+      source for the index. Everything after the following blank line is the body.
+    example: |
+      > [user] prefers TypeScript, dark mode, short responses
+
+      Prefers TS over JS for all new work. Wants terse replies — no preamble.
+      Dark mode everywhere.
+    note: >
+      Files are the single source of truth. There is no YAML frontmatter.
+      Tags like [user] or [project] ride in the summary line.
+  index:
+    label: Index
+    body: >
+      MEMORY.md is derived from each file's summary line so agents can
+      scan what exists before opening details. After editing files by hand, run
+      memory reindex.
+  ui:
+    label: Local UI
+    body: >
+      memory ui opens a loopback-only browser UI (default 127.0.0.1:8787)
+      to list, search, create, edit, and delete entries. Same storage as the CLI —
+      mutations go through the same store layer.
+    cmd: |
+      memory ui
+      memory ui --no-open
+  philosophy:
+    label: Philosophy
+    yours_title: Yours
+    yours_body: files on disk, not locked to a provider or single harness
+    pluggable_title: Pluggable
+    pluggable_body: skill, MCP, and official hooks/plugins; same memory folder
+    portable_title: Portable
+    portable_body: plain markdown, easy to inspect and edit
+    small_title: Small
+    small_body: one binary, fast startup (important when hooks call the CLI often)
+    vectorless_title: Vectorless
+    vectorless_body: no embeddings, no sync daemon, no LLM inside the CLI

@@ -1,0 +1,58 @@
+{{define "integrations"}}
+  <p class="doc-title">{{.T "heading"}}</p>
+  <p class="doc-lead">{{.T "lead"}}</p>
+
+  <section class="section">
+    <div class="section__label">{{.T "harnesses.label"}}</div>
+    <a class="cell" href="#claude-code">
+      <div class="cell__title">{{.T "harnesses.claude_title"}}</div>
+      <div class="cell__desc">{{.T "harnesses.claude_desc"}}</div>
+    </a>
+    <a class="cell" href="#opencode">
+      <div class="cell__title">{{.T "harnesses.opencode_title"}}</div>
+      <div class="cell__desc">{{.T "harnesses.opencode_desc"}}</div>
+    </a>
+    <a class="cell" href="#other">
+      <div class="cell__title">{{.T "harnesses.other_title"}}</div>
+      <div class="cell__desc">{{.T "harnesses.other_desc"}}</div>
+    </a>
+  </section>
+
+  <section class="section" id="claude-code">
+    <div class="section__label">{{.T "claude.label"}}</div>
+    <p>{{.T "claude.body"}}</p>
+    <pre><code>{{.T "claude.cmd"}}</code></pre>
+    <p class="muted">{{.T "claude.note"}}</p>
+  </section>
+
+  <section class="section" id="opencode">
+    <div class="section__label">{{.T "opencode.label"}}</div>
+    <p>{{.T "opencode.body"}}</p>
+    <pre><code>{{.T "opencode.cmd"}}</code></pre>
+  </section>
+
+  <section class="section" id="other">
+    <div class="section__label">{{.T "other.label"}}</div>
+    <p>{{.T "other.body"}}</p>
+    <p>{{.T "other.install_intro"}}</p>
+    <pre><code>{{.T "other.cmd"}}</code></pre>
+    <p>{{.T "other.path_note"}}</p>
+    <ul class="list">
+      <li>{{.T "other.bullet_no_hook"}}</li>
+      <li>{{.T "other.bullet_no_combo"}}</li>
+      <li>{{.T "other.bullet_mcp"}}</li>
+      <li>{{.T "other.bullet_rm"}}</li>
+    </ul>
+    <p class="muted">{{.T "other.prefer"}}</p>
+  </section>
+
+  <section class="section">
+    <div class="section__label">{{.T "skill_vs_mcp.label"}}</div>
+    <ul class="list">
+      <li>{{.T "skill_vs_mcp.skill"}}</li>
+      <li>{{.T "skill_vs_mcp.mcp"}}</li>
+      <li>{{.T "skill_vs_mcp.hooks"}}</li>
+    </ul>
+    <p class="muted">{{.T "skill_vs_mcp.note"}}</p>
+  </section>
+{{end}}
