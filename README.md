@@ -8,6 +8,8 @@ Agents forget. Worse: when memory lives inside a model provider or a single harn
 
 **Free for personal and commercial use. Source is private.** This repository holds the documentation site, issue tracker, and release binaries.
 
+> 🌐 อ่านภาษาไทย [ที่นี่](README.th.md)
+
 ## Install
 
 ```bash
