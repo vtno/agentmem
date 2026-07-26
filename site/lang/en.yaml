@@ -8,6 +8,17 @@ common:
   theme:
     to_light: Switch to light mode
     to_dark: Switch to dark mode
+  lang:
+    to_en: Switch to English
+    to_th: สลับเป็นภาษาไทย
+    code_en: EN
+    code_th: TH
+  chrome:
+    aria: Display controls
+  harnesses:
+    claude_title: Claude Code
+    opencode_title: OpenCode
+    other_title: Other harnesses
   nav:
     install: Install
     commands: Commands
@@ -18,7 +29,7 @@ common:
     aria: Primary
   footer:
     free: Free for personal and commercial use. Source private.
-    markdown: Markdown
+    markdown: Markdown for AI
     home: Home
     releases: releases
     github: github.com/vtno/agentmem
@@ -37,14 +48,14 @@ common:
     home: Home
 
 index:
-  title: "agentmem — vectorless memory for AI agents"
+  title: "Agentmem — vectorless memory for AI agents"
   description: "Pluggable vectorless memory for any agent harness. Your markdown, your machine — not locked to a provider."
   tagline: Vectorless memory for AI agents
   hook_p1: >
     Agents forget. Worse: when memory lives inside a model provider or a single harness,
     your conventions, decisions, and project knowledge leave with the product.
   hook_p2: >
-    agentmem is a pluggable memory layer you own. Plain markdown on your machine,
+    Agentmem is a pluggable memory layer you own. Plain markdown on your machine,
     one memory binary, wired into any agent that can run shell or MCP — so the
     memory stays yours when you switch tools.
   install_cmd: "curl -fsSL https://agentmem.thamtech.co/install | sh"
@@ -58,7 +69,7 @@ index:
     pluggable_title: Pluggable
     pluggable_body: skill or MCP install into the harness you already use
     portable_title: Portable
-    portable_body: switch agents; keep the same memory folder
+    portable_body: switch agents; keep it's memory
     vectorless_title: Vectorless
     vectorless_body: no embeddings, no daemon, no cloud required
   quick_start:
@@ -68,18 +79,15 @@ index:
     step3: Agents read and write the same local store — your memory travels with you
   harnesses:
     label: Supported harnesses
-    claude_title: Claude Code
-    claude_desc: Official — skill + hook · optional MCP →
-    opencode_title: OpenCode
-    opencode_desc: Official — skill + plugin · optional MCP →
-    other_title: Other harnesses
-    other_desc: Skill only — memory install skill →
+    claude_desc: skill + hook · optional MCP →
+    opencode_desc: skill + plugin · optional MCP →
+    other_desc: skill · optional MCP →
   docs:
     label: Docs
     install_title: Install
-    install_desc: Platforms, curl script, manual download, harness wiring →
+    install_desc: Binary download and harness wiring →
     commands_title: Commands
-    commands_desc: CLI reference for list, add, search, ui, serve, and more →
+    commands_desc: CLI command reference →
     integrations_title: Integrations
     integrations_desc: Claude Code, OpenCode, skill vs MCP →
     how_title: How it works
@@ -101,9 +109,9 @@ install:
       GitHub Releases, and installs memory to ~/.local/bin (or /usr/local/bin when available).
   platforms:
     label: Platforms
-    macos: macOS arm64 and amd64
+    macos: macOS amd64 and arm64
     linux: Linux amd64 and arm64
-    windows: Windows amd64 (zip from Releases; put memory.exe on PATH)
+    windows: Windows amd64 and arm64 (zip from Releases; put memory.exe on PATH)
   manual:
     label: Manual install
     step1: Open GitHub Releases and download the archive for your platform
@@ -188,7 +196,7 @@ commands:
     serve_body: Start the MCP server on stdio (spawned by harnesses that use MCP).
     serve_cmd: memory serve
     ui_title: memory ui
-    ui_body: Local browser UI to list, search, create, edit, and delete memories. Loopback only.
+    ui_body: Local browser UI to list, search, create, edit, and delete memories by human.
     ui_cmd: |
       memory ui
       memory ui --addr 127.0.0.1:8787 --no-open
@@ -219,11 +227,8 @@ integrations:
     can still use the shared skill — without that enforcement layer.
   harnesses:
     label: Harnesses
-    claude_title: Claude Code
     claude_desc: Official — skill + hook · optional MCP →
-    opencode_title: OpenCode
     opencode_desc: Official — skill + plugin · optional MCP →
-    other_title: Other harnesses
     other_desc: Skill only — no hook/plugin enforcement →
   claude:
     label: Claude Code · official
