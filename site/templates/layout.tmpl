@@ -23,14 +23,33 @@
 <meta name="htmx-config" content='{"defaultSwapDelay":0,"defaultSettleDelay":0,"historyCacheSize":20}'>
 </head>
 <body hx-boost="true" hx-ext="preload" hx-target="#main" hx-select="#main" hx-swap="innerHTML show:window:top settle:0 swap:0">
-<button
-  type="button"
-  class="theme-toggle"
-  id="theme-toggle"
-  data-label-light="{{.T "common.theme.to_light"}}"
-  data-label-dark="{{.T "common.theme.to_dark"}}"
-  aria-label="{{.T "common.theme.to_dark"}}"
-></button>
+<div class="chrome-toggles" role="group" aria-label="{{.T "common.chrome.aria"}}">
+  <button
+    type="button"
+    class="chrome-btn lang-toggle"
+    id="lang-toggle"
+    data-lang="{{.Lang}}"
+    data-label-en="{{.T "common.lang.to_en"}}"
+    data-label-th="{{.T "common.lang.to_th"}}"
+    data-code-en="{{.T "common.lang.code_en"}}"
+    data-code-th="{{.T "common.lang.code_th"}}"
+    {{if eq .Lang "th"}}
+    aria-label="{{.T "common.lang.to_en"}}"
+    title="{{.T "common.lang.to_en"}}"
+    {{else}}
+    aria-label="{{.T "common.lang.to_th"}}"
+    title="{{.T "common.lang.to_th"}}"
+    {{end}}
+  >{{if eq .Lang "th"}}{{.T "common.lang.code_en"}}{{else}}{{.T "common.lang.code_th"}}{{end}}</button>
+  <button
+    type="button"
+    class="chrome-btn theme-toggle"
+    id="theme-toggle"
+    data-label-light="{{.T "common.theme.to_light"}}"
+    data-label-dark="{{.T "common.theme.to_dark"}}"
+    aria-label="{{.T "common.theme.to_dark"}}"
+  ></button>
+</div>
 <div id="main" class="wrap" preload="mouseover">
 
   {{template "header" .}}

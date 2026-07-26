@@ -175,7 +175,51 @@
     } catch (e) {}
   }
 
+  function currentLang() {
+    var btn = document.getElementById("lang-toggle");
+    var lang = btn && btn.getAttribute("data-lang");
+    lang = (lang || "en").toLowerCase();
+    return lang === "th" ? "th" : "en";
+  }
+
+  function syncLangButton() {
+    var btn = document.getElementById("lang-toggle");
+    if (!btn) return;
+    var cur = currentLang();
+    var next = cur === "th" ? "en" : "th";
+    var code =
+      next === "th"
+        ? btn.getAttribute("data-code-th") || "TH"
+        : btn.getAttribute("data-code-en") || "EN";
+    var label =
+      next === "th"
+        ? btn.getAttribute("data-label-th") || "สลับเป็นภาษาไทย"
+        : btn.getAttribute("data-label-en") || "Switch to English";
+    btn.textContent = code;
+    btn.setAttribute("aria-label", label);
+    btn.setAttribute("title", label);
+  }
+
+  function initLangToggle() {
+    var btn = document.getElementById("lang-toggle");
+    if (!btn || btn.getAttribute("data-lang-ready") === "1") return;
+    btn.setAttribute("data-lang-ready", "1");
+    syncLangButton();
+    btn.addEventListener("click", function () {
+      var next = currentLang() === "th" ? "en" : "th";
+      try {
+        document.cookie =
+          "lang=" + next + ";path=/;max-age=31536000;SameSite=Lax";
+      } catch (e) {}
+      /* Full navigation: language is server-rendered (outside htmx partial). */
+      var url = new URL(window.location.href);
+      url.searchParams.set("lang", next);
+      window.location.assign(url.pathname + url.search + url.hash);
+    });
+  }
+
   function onReady() {
+    initLangToggle();
     initThemeToggle();
     enhanceAll(document);
   }

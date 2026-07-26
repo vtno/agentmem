@@ -9,7 +9,8 @@
   --code-bg: rgba(28, 28, 26, 0.04);
   --invert-bg: #1c1c1a;
   --invert-fg: #f4f3ef;
-  --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  /* Mono first; system Thai faces cover glyphs mono fonts lack */
+  --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Thonburi", "Leelawadee UI", "Noto Sans Thai", monospace;
 
   /*
    * Type scale (rem). Base = current paragraph size (13px → 1rem).
@@ -72,12 +73,17 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
-/* Fixed square theme control — top-right viewport corner */
-.theme-toggle {
+/* Fixed chrome controls — top-right (lang + theme) */
+.chrome-toggles {
   position: fixed;
   top: 1rem;
   right: 1rem;
   z-index: 50;
+  display: flex;
+  gap: 0.35rem;
+}
+
+.chrome-btn {
   display: grid;
   place-items: center;
   width: 2rem;
@@ -88,8 +94,17 @@ html {
   background: var(--bg);
   border: 1px solid var(--border);
   cursor: pointer;
-  line-height: 0;
+  font-family: inherit;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1;
   transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+/* Icon-only buttons collapse text metrics; SVGs still center fine */
+.theme-toggle {
+  line-height: 0;
 }
 
 .theme-toggle__icon {
@@ -99,19 +114,25 @@ html {
   pointer-events: none;
 }
 
-.theme-toggle:hover {
+.chrome-btn:hover {
   background: var(--invert-bg);
   color: var(--invert-fg);
   border-color: var(--invert-bg);
 }
 
-.theme-toggle:focus {
+.chrome-btn:focus {
   outline: none;
   box-shadow: 0 0 0 1px var(--border);
 }
 
-.theme-toggle:focus:not(:focus-visible) {
+.chrome-btn:focus:not(:focus-visible) {
   box-shadow: none;
+}
+
+.lang-toggle {
+  /* Two-letter codes need a hair more room than the icon square */
+  min-width: 2rem;
+  padding: 0 0.15rem;
 }
 
 body {

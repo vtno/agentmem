@@ -36,7 +36,7 @@ type page struct {
 	// Content is the template name and i18n page key (e.g. "index", "install").
 	Content string
 	// Nav is the active primary nav key.
-	Nav string
+	Nav  string
 	Home bool
 	// Markdown is the path for the "Markdown" footer link.
 	Markdown string
@@ -205,6 +205,17 @@ func (s *server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	w.Header().Set("Content-Language", lang)
 	w.Header().Set("Cache-Control", "no-cache")
+	// Persist explicit ?lang= choice so htmx / follow-up navigations keep it.
+	if q := strings.TrimSpace(r.URL.Query().Get("lang")); q != "" {
+		http.SetCookie(w, &http.Cookie{
+			Name:     "lang",
+			Value:    lang,
+			Path:     "/",
+			MaxAge:   365 * 24 * 60 * 60,
+			SameSite: http.SameSiteLaxMode,
+			HttpOnly: false, // readable by the client toggle if needed
+		})
+	}
 	if r.Method == http.MethodHead {
 		w.WriteHeader(http.StatusOK)
 		return
@@ -215,6 +226,12 @@ func (s *server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// supportedLangs is the set of site/lang/<code>.yaml packs we ship.
+var supportedLangs = map[string]bool{
+	"en": true,
+	"th": true,
+}
+
 func pickLang(r *http.Request) string {
 	if q := strings.TrimSpace(r.URL.Query().Get("lang")); q != "" {
 		return normalizeLangCode(q)
@@ -222,12 +239,22 @@ func pickLang(r *http.Request) string {
 	if c, err := r.Cookie("lang"); err == nil && c.Value != "" {
 		return normalizeLangCode(c.Value)
 	}
-	// Accept-Language: take first tag
+	// Accept-Language: first supported tag (not merely first tag)
 	if al := r.Header.Get("Accept-Language"); al != "" {
-		part := strings.Split(al, ",")[0]
-		part = strings.TrimSpace(strings.Split(part, ";")[0])
-		if part != "" {
-			return normalizeLangCode(part)
+		for _, raw := range strings.Split(al, ",") {
+			part := strings.TrimSpace(strings.Split(raw, ";")[0])
+			if part == "" {
+				continue
+			}
+			code := normalizeLangCode(part)
+			// normalizeLangCode maps unknown → en; only accept if the raw prefix is supported
+			base := strings.ToLower(part)
+			if i := strings.IndexAny(base, "-_"); i > 0 {
+				base = base[:i]
+			}
+			if supportedLangs[base] {
+				return code
+			}
 		}
 	}
 	return "en"
@@ -238,7 +265,7 @@ func normalizeLangCode(code string) string {
 	if i := strings.IndexAny(code, "-_"); i > 0 {
 		code = code[:i]
 	}
-	if code == "" {
+	if !supportedLangs[code] {
 		return "en"
 	}
 	return code
