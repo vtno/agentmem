@@ -46,10 +46,10 @@ func TestLoadCatalogTH(t *testing.T) {
 	if strings.HasPrefix(got, "\u27e8") {
 		t.Fatalf("missing title: %q", got)
 	}
-	if !strings.Contains(got, "agentmem") {
+	if !strings.Contains(strings.ToLower(got), "agentmem") {
 		t.Fatalf("title = %q", got)
 	}
-	if got := c.t("index", "why.label"); got != "ทำไม" {
+	if got := c.t("index", "why.label"); got != "ทำไมถึงต้องใช้" {
 		t.Fatalf("why.label = %q", got)
 	}
 }

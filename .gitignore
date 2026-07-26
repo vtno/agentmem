@@ -2,6 +2,10 @@
 /agentmem-site
 *.exe
 
+# Local env (Kamal registry password, etc.)
+.env
+.env.*
+
 # OS / editor
 .DS_Store
 *.swp
