@@ -15,9 +15,13 @@ common:
   chrome:
     aria: ตัวควบคุมการแสดงผล
   harnesses:
+    label: Harness ที่รองรับ
     claude_title: Claude Code
+    claude_desc: skill + hook · ผ่าน MCP ได้ →
     opencode_title: OpenCode
+    opencode_desc: skill + plugin · ผ่าน MCP ได้ →
     other_title: Harness อื่น
+    other_desc: skill · ผ่าน MCP ได้ →
   nav:
     install: ติดตั้ง
     commands: คำสั่ง
@@ -76,11 +80,6 @@ index:
     step1: ติดตั้งไบนารี memory (สคริปต์ curl หรือ Releases)
     step2: "เชื่อม: memory install claude-code, opencode หรือ memory install skill สำหรับ harness อื่น"
     step3: Agent อ่านและเขียนในไดเรคทอรี่เดียวกัน — ความทรงจำตามไปกับคุณ
-  harnesses:
-    label: Harness ที่รองรับ
-    claude_desc: skill + hook · ผ่าน MCP ได้ →
-    opencode_desc: skill + plugin · ผ่าน MCP ได้ →
-    other_desc: skill · ผ่าน MCP ได้ →
   docs:
     label: คู่มือ
     install_title: ติดตั้ง
@@ -225,11 +224,6 @@ integrations:
   lead: >
     Harness ทางการได้ skill บวก enforcement (hooks/plugins) agent ที่รัน shell ได้
     ยังใช้ skill ร่วมได้ — โดยไม่มีชั้น enforcement นั้น
-  harnesses:
-    label: Harness
-    claude_desc: ทางการ — skill + hook · MCP ได้ →
-    opencode_desc: ทางการ — skill + plugin · MCP ได้ →
-    other_desc: Skill อย่างเดียว — ไม่มี hook/plugin →
   claude:
     label: Claude Code · ทางการ
     body: >

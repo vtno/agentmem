@@ -16,9 +16,13 @@ common:
   chrome:
     aria: Display controls
   harnesses:
+    label: Supported harnesses
     claude_title: Claude Code
+    claude_desc: skill + hook · optional MCP →
     opencode_title: OpenCode
+    opencode_desc: skill + plugin · optional MCP →
     other_title: Other harnesses
+    other_desc: skill · optional MCP →
   nav:
     install: Install
     commands: Commands
@@ -77,11 +81,6 @@ index:
     step1: Install the memory binary (curl script or Releases)
     step2: "Plug in: memory install claude-code, opencode, or memory install skill for other harnesses"
     step3: Agents read and write the same local store — your memory travels with you
-  harnesses:
-    label: Supported harnesses
-    claude_desc: skill + hook · optional MCP →
-    opencode_desc: skill + plugin · optional MCP →
-    other_desc: skill · optional MCP →
   docs:
     label: Docs
     install_title: Install
@@ -225,11 +224,6 @@ integrations:
   lead: >
     Official harnesses get skill plus enforcement (hooks/plugins). Other shell-capable agents
     can still use the shared skill — without that enforcement layer.
-  harnesses:
-    label: Harnesses
-    claude_desc: Official — skill + hook · optional MCP →
-    opencode_desc: Official — skill + plugin · optional MCP →
-    other_desc: Skill only — no hook/plugin enforcement →
   claude:
     label: Claude Code · official
     body: >
