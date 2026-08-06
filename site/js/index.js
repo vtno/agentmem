@@ -44,6 +44,22 @@
     btn.setAttribute("aria-label", kind === "ok" ? "Copied" : "Copy code");
   }
 
+  function popMascot() {
+    var img = document.createElement("img");
+    img.className = "copy-pop";
+    img.alt = "";
+    /* Inverted theme → file mapping (matches the brand mascot
+     * convention in layout.tmpl + syncBrandMascot): dark theme
+     * shows the LIGHT-coloured robot, light theme shows the
+     * DARK-coloured one, so the icon reads against its bg. */
+    var name = currentTheme() === "dark" ? "light" : "dark";
+    img.src = "/assets/icons/agentmem-mascot-thumb-up-" + name + ".png";
+    img.addEventListener("animationend", function () {
+      if (img.parentNode) img.parentNode.removeChild(img);
+    });
+    document.body.appendChild(img);
+  }
+
   function copyText(text) {
     if (navigator.clipboard && navigator.clipboard.writeText) {
       return navigator.clipboard.writeText(text);
@@ -94,6 +110,7 @@
       copyText(text)
         .then(function () {
           setIcon(btn, "ok");
+          popMascot();
           window.setTimeout(function () {
             setIcon(btn, "copy");
           }, 1400);
@@ -143,6 +160,7 @@
     } catch (e) {}
     syncThemeButton(theme);
     syncBrandMascot(theme);
+    syncLedeMascot(theme);
   }
 
   function syncBrandMascot(theme) {
@@ -155,6 +173,16 @@
     var name = theme === "dark" ? "light" : "dark";
     var next = "/assets/icons/agentmem-mascot-normal-" + name + ".png";
     /* Only swap if it actually changed — avoids reloading the image. */
+    if (img.getAttribute("src") !== next) img.setAttribute("src", next);
+  }
+
+  function syncLedeMascot(theme) {
+    var img = document.getElementById("lede-mascot");
+    if (!img) return;
+    /* Same inverted theme → file mapping as syncBrandMascot. The lede
+     * uses the heart variant. */
+    var name = theme === "dark" ? "light" : "dark";
+    var next = "/assets/icons/agentmem-mascot-heart-" + name + ".png";
     if (img.getAttribute("src") !== next) img.setAttribute("src", next);
   }
 
@@ -175,8 +203,9 @@
     if (!btn || btn.getAttribute("data-theme-ready") === "1") return;
     btn.setAttribute("data-theme-ready", "1");
     syncThemeButton(currentTheme());
-    /* Sync the brand mascot to whichever theme is actually being shown. */
+    /* Sync the brand + lede mascots to whichever theme is being shown. */
     syncBrandMascot(currentTheme());
+    syncLedeMascot(currentTheme());
     btn.addEventListener("click", function () {
       applyTheme(currentTheme() === "dark" ? "light" : "dark");
     });
@@ -188,6 +217,7 @@
           var sys = systemTheme();
           syncThemeButton(sys);
           syncBrandMascot(sys);
+          syncLedeMascot(sys);
         }
       };
       if (mq.addEventListener) mq.addEventListener("change", onChange);

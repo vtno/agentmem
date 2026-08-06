@@ -15,24 +15,30 @@
     }
   } catch (e) {}
 
-  /* Pick the matching mascot for the resolved theme so the brand icon
-   * doesn't flash before the deferred JS in /js/index.js runs.
+  /* Pick the matching mascots for the resolved theme so the brand and
+   * lede icons don't flash before the deferred JS in /js/index.js runs.
    * NOTE: the file suffix is named for the mascot's fill — "-light"
    * is a LIGHT-colored robot (visible on a dark bg), "-dark" is a
    * DARK-colored robot (visible on a light bg). So we INVERT the
    * theme → mascot mapping. */
   try {
-    var mascot = document.getElementById("brand-mascot");
-    if (mascot) {
-      var prefersDark =
-        window.matchMedia &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches;
-      var resolved = document.documentElement.getAttribute("data-theme") ||
-        (prefersDark ? "dark" : "light");
-      /* Inverted: dark theme uses the -light mascot, light theme uses
-       * the -dark mascot, so each is always visible against its bg. */
-      var mascotName = resolved === "dark" ? "light" : "dark";
-      mascot.src = "/assets/icons/agentmem-mascot-normal-" + mascotName + ".png";
+    var prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    var resolved = document.documentElement.getAttribute("data-theme") ||
+      (prefersDark ? "dark" : "light");
+    /* Inverted: dark theme uses the -light mascot, light theme uses
+     * the -dark mascot, so each is always visible against its bg. */
+    var mascotName = resolved === "dark" ? "light" : "dark";
+    var brandMascot = document.getElementById("brand-mascot");
+    if (brandMascot) {
+      brandMascot.src =
+        "/assets/icons/agentmem-mascot-normal-" + mascotName + ".png";
+    }
+    var ledeMascot = document.getElementById("lede-mascot");
+    if (ledeMascot) {
+      ledeMascot.src =
+        "/assets/icons/agentmem-mascot-heart-" + mascotName + ".png";
     }
   } catch (e) {}
 })();
@@ -84,7 +90,10 @@
   <div class="wrap">
 
     {{if .Home}}
-    <p class="lede">{{.T "tagline"}}</p>
+    <p class="lede">
+    {{.T "tagline"}}
+    <img id="lede-mascot" class="lede-mascot" src="/assets/icons/agentmem-mascot-heart-dark.png" alt="" width="50">
+    </p>
     {{else}}
     <p class="crumb"><a href="/">{{.T "common.crumb.home"}}</a> · {{.T "common.crumb.docs"}} / {{.T "heading"}}</p>
     {{end}}
