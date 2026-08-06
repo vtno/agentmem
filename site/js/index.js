@@ -142,6 +142,20 @@
       localStorage.setItem(THEME_KEY, theme);
     } catch (e) {}
     syncThemeButton(theme);
+    syncBrandMascot(theme);
+  }
+
+  function syncBrandMascot(theme) {
+    var img = document.getElementById("brand-mascot");
+    if (!img) return;
+    /* File suffix names the mascot's fill colour, not the theme. The
+     * `-light` mascot is a LIGHT-coloured robot (visible on dark bg),
+     * the `-dark` mascot is a DARK-coloured one (visible on light bg).
+     * Invert the mapping so each mascot reads against its bg. */
+    var name = theme === "dark" ? "light" : "dark";
+    var next = "/assets/icons/agentmem-mascot-normal-" + name + ".png";
+    /* Only swap if it actually changed — avoids reloading the image. */
+    if (img.getAttribute("src") !== next) img.setAttribute("src", next);
   }
 
   function syncThemeButton(theme) {
@@ -161,6 +175,8 @@
     if (!btn || btn.getAttribute("data-theme-ready") === "1") return;
     btn.setAttribute("data-theme-ready", "1");
     syncThemeButton(currentTheme());
+    /* Sync the brand mascot to whichever theme is actually being shown. */
+    syncBrandMascot(currentTheme());
     btn.addEventListener("click", function () {
       applyTheme(currentTheme() === "dark" ? "light" : "dark");
     });
@@ -168,7 +184,11 @@
     try {
       var mq = window.matchMedia("(prefers-color-scheme: dark)");
       var onChange = function () {
-        if (!hasExplicitTheme()) syncThemeButton(systemTheme());
+        if (!hasExplicitTheme()) {
+          var sys = systemTheme();
+          syncThemeButton(sys);
+          syncBrandMascot(sys);
+        }
       };
       if (mq.addEventListener) mq.addEventListener("change", onChange);
       else if (mq.addListener) mq.addListener(onChange);

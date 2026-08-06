@@ -14,6 +14,27 @@
       document.documentElement.setAttribute("data-theme", t);
     }
   } catch (e) {}
+
+  /* Pick the matching mascot for the resolved theme so the brand icon
+   * doesn't flash before the deferred JS in /js/index.js runs.
+   * NOTE: the file suffix is named for the mascot's fill — "-light"
+   * is a LIGHT-colored robot (visible on a dark bg), "-dark" is a
+   * DARK-colored robot (visible on a light bg). So we INVERT the
+   * theme → mascot mapping. */
+  try {
+    var mascot = document.getElementById("brand-mascot");
+    if (mascot) {
+      var prefersDark =
+        window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches;
+      var resolved = document.documentElement.getAttribute("data-theme") ||
+        (prefersDark ? "dark" : "light");
+      /* Inverted: dark theme uses the -light mascot, light theme uses
+       * the -dark mascot, so each is always visible against its bg. */
+      var mascotName = resolved === "dark" ? "light" : "dark";
+      mascot.src = "/assets/icons/agentmem-mascot-normal-" + mascotName + ".png";
+    }
+  } catch (e) {}
 })();
 </script>
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
@@ -50,17 +71,28 @@
     aria-label="{{.T "common.theme.to_dark"}}"
   ></button>
 </div>
-<div id="main" class="wrap" preload="mouseover">
+<div id="main" preload="mouseover">
 
   {{template "header" .}}
 
-  {{if eq .Content "index"}}{{template "index" .}}
-  {{else if eq .Content "install"}}{{template "install" .}}
-  {{else if eq .Content "commands"}}{{template "commands" .}}
-  {{else if eq .Content "integrations"}}{{template "integrations" .}}
-  {{else if eq .Content "how-it-works"}}{{template "how-it-works" .}}
-  {{end}}
+  {{template "nav" .}}
 
+  <div class="wrap">
+
+    {{if .Home}}
+    <p class="lede">{{.T "tagline"}}</p>
+    {{else}}
+    <p class="crumb"><a href="/">{{.T "common.crumb.home"}}</a> · {{.T "common.crumb.docs"}} / {{.T "heading"}}</p>
+    {{end}}
+
+    {{if eq .Content "index"}}{{template "index" .}}
+    {{else if eq .Content "install"}}{{template "install" .}}
+    {{else if eq .Content "commands"}}{{template "commands" .}}
+    {{else if eq .Content "integrations"}}{{template "integrations" .}}
+    {{else if eq .Content "how-it-works"}}{{template "how-it-works" .}}
+    {{end}}
+
+  </div>
   {{template "footer" .}}
 
 </div>
