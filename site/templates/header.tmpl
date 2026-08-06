@@ -9,6 +9,8 @@
 
 {{define "nav"}}
   <nav class="site-nav" aria-label="{{.T "common.nav.aria"}}">
+    <a href="/"{{if .Home}} aria-current="page"{{end}}>HOME</a>
+    <span class="site-nav__divider" aria-hidden="true"></span>
     <a href="/docs/install"{{if eq .Nav "install"}} aria-current="page"{{end}}>{{.T "common.nav.install"}}</a>
     <span class="site-nav__divider" aria-hidden="true"></span>
     <a href="/docs/commands"{{if eq .Nav "commands"}} aria-current="page"{{end}}>{{.T "common.nav.commands"}}</a>
@@ -17,11 +19,9 @@
     <span class="site-nav__divider" aria-hidden="true"></span>
     <a href="/docs/how-it-works"{{if eq .Nav "how-it-works"}} aria-current="page"{{end}}>{{.T "common.nav.how_it_works"}}</a>
     <span class="site-nav__divider" aria-hidden="true"></span>
-    <a href="https://github.com/vtno/agentmem/releases">{{.T "common.nav.releases"}}</a>
-    {{if .Home}}
+    <a href="https://github.com/vtno/agentmem/releases">{{.T "common.nav.releases"}} ➚</a>
     <span class="site-nav__divider" aria-hidden="true"></span>
-    <a href="https://github.com/vtno/agentmem/issues">{{.T "common.nav.issues"}}</a>
-    {{end}}
+    <a href="https://github.com/vtno/agentmem/issues">{{.T "common.nav.issues"}} ➚</a>
     <span class="site-nav__divider site-nav__divider--fill" aria-hidden="true"></span>
   </nav>
 {{end}}

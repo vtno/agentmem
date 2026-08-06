@@ -120,9 +120,9 @@ html {
 }
 
 .chrome-btn:hover {
-  background: var(--invert-bg);
-  color: var(--invert-fg);
-  border-color: var(--invert-bg);
+  background-color: #9EE22E;
+  color: #1c1c1a;
+  border-color: #9EE22E;
 }
 
 .chrome-btn:focus {
@@ -168,7 +168,7 @@ header.site-header .brand {
   color: var(--fg);
   text-decoration: none;
   font-family: var(--mono);
-  font-size: clamp(1.4rem, 1.1rem + 1vw, 1.75rem);
+  font-size: 2.25rem;
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -202,31 +202,33 @@ header.site-header .brand:hover {
 }
 
 /*
- * Lede — the italic tagline at the top of the container. Matches the
- * editorial "Vectorless memory for AI agents" treatment in the reference:
- * large, italic, monospace, sits just below the tab bar.
+ * Lede — the tagline at the top of the container. Uses Caveat
+ * (Google Fonts handwriting family, loaded in layout.tmpl) for an
+ * editorial handwritten feel. No italic — Caveat already carries
+ * the casual stroke; browser-synthesized slant on a script font
+ * reads as broken.
+ *
+ * Crumb — the docs-page variant — stays monospace, smaller,
+ * non-italic, muted (a navigational breadcrumb, not editorial).
  */
 .wrap > .lede,
 .wrap > .crumb {
   margin: 0 0 1.5rem;
   padding-top: 1.25rem;
-  font-family: var(--mono);
-  font-size: clamp(1.1rem, 1rem + 0.6vw, 1.35rem);
-  font-style: italic;
   font-weight: 500;
   line-height: 1.45;
-  color: var(--fg);
   max-width: 32em;
 }
 
-/* Crumb is the docs-page variant — smaller, non-italic, muted. */
-.wrap > .crumb {
-  font-size: var(--text-base);
+.wrap > .lede {
+  font-family: "Caveat", cursive;
+  font-size: 2.75rem;
   font-style: normal;
-  color: var(--muted);
+  color: var(--fg);
 }
 
 .wrap > .crumb {
+  font-family: var(--mono);
   font-size: var(--text-base);
   font-style: normal;
   color: var(--muted);
@@ -306,9 +308,22 @@ nav.site-nav > a {
     color 0.15s ease;
 }
 
+/* Icon inside a nav tab (e.g. the thumb-up mascot on the Home tab).
+ * Sized in em so it tracks the tab font across the mobile / tablet /
+ * extra-narrow breakpoints. flex-shrink: 0 keeps the icon from being
+ * squashed when the nav row gets tight. */
+nav.site-nav > a > img {
+  display: block;
+  width: 1.35em;
+  height: 1.35em;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
 nav.site-nav > a:hover {
-  background: var(--invert-bg);
-  color: var(--invert-fg);
+  background-color: #9EE22E;
+  color: #1c1c1a;
+  border-color: #9EE22E;
 }
 
 /* Active tab — bg matches the container, top/left/right border only
@@ -324,8 +339,9 @@ nav.site-nav > a[aria-current="page"] {
 }
 
 nav.site-nav > a[aria-current="page"]:hover {
-  background: var(--bg);
-  color: var(--muted);
+  background-color: #9EE22E;
+  color: #1c1c1a;
+  border-color: #9EE22E;
 }
 
 /* Sections */
@@ -334,8 +350,10 @@ nav.site-nav > a[aria-current="page"]:hover {
 }
 
 .section__label {
-  font-size: var(--text-xs);
-  color: var(--muted);
+  font-family: "Space Mono", var(--mono);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--fg);
   text-transform: uppercase;
   letter-spacing: 0.04em;
   margin-bottom: 0.65rem;
@@ -346,7 +364,6 @@ p {
   margin-bottom: 0.85rem;
   font-size: var(--text-base);
   line-height: var(--leading-relaxed);
-  max-width: 40em;
   overflow-wrap: anywhere;
   word-break: normal;
   text-wrap: pretty;
@@ -370,7 +387,6 @@ a {
 
 ul.list {
   list-style: none;
-  max-width: 40em;
 }
 
 /* Prose after lists (lists have no bottom margin of their own) */
@@ -397,7 +413,6 @@ ul.list li::before {
 ol.steps {
   list-style: none;
   counter-reset: step;
-  max-width: 40em;
 }
 
 ol.steps li {
@@ -464,10 +479,12 @@ code {
   font-size: 0.92em;
   border: 1px solid var(--border);
   background: var(--code-bg);
-  padding: 0.1rem 0.3rem;
+  padding: 0.2rem 0.755rem;
   overflow-wrap: anywhere;
   word-break: break-word;
   white-space: break-spaces;
+  border-radius: 4px;
+  background-color: rgba(158, 226, 46, 0.2);
 }
 
 /* Wrapper holds pre + floating copy control (js/index.js). Owns outer gap. */
@@ -543,9 +560,9 @@ pre code {
 }
 
 .code-block .copy-btn:hover {
-  background: var(--invert-bg);
-  color: var(--invert-fg);
-  border-color: var(--invert-bg);
+  background-color: #9EE22E;
+  color: #1c1c1a;
+  border-color: #9EE22E;
 }
 
 .code-block .copy-btn:focus {
@@ -563,11 +580,16 @@ pre code {
   border: 1px solid var(--invert-bg);
   padding: 0.65rem 0.85rem;
   font-size: var(--text-base);
-  transition: opacity 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
 }
 
 .cta:hover {
-  opacity: 0.88;
+  background-color: #9EE22E;
+  color: #1c1c1a;
+  border-color: #9EE22E;
 }
 
 .cta-row {
@@ -592,9 +614,9 @@ pre code {
 }
 
 .cta-row a:hover {
-  background: var(--invert-bg);
-  color: var(--invert-fg);
-  border-color: var(--invert-bg);
+  background-color: #9EE22E;
+  color: #1c1c1a;
+  border-color: #9EE22E;
 }
 
 /* Command blocks on docs */
@@ -606,7 +628,7 @@ pre code {
 .cmd-block > summary {
   list-style: none;
   cursor: pointer;
-  padding: 0.65rem 0.75rem;
+  padding: 0.75rem 0.75rem;
   font-size: var(--text-base);
   line-height: var(--leading-snug);
   user-select: none;
@@ -706,7 +728,6 @@ footer.site-footer p:last-child {
   color: var(--muted);
   margin-bottom: 1.25rem;
   line-height: var(--leading-relaxed);
-  max-width: 40em;
   overflow-wrap: anywhere;
   text-wrap: pretty;
 }
