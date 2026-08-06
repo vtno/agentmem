@@ -10,7 +10,9 @@
   --invert-bg: #1c1c1a;
   --invert-fg: #f4f3ef;
   /* Mono first; system Thai faces cover glyphs mono fonts lack */
-  --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Thonburi", "Leelawadee UI", "Noto Sans Thai", monospace;
+  --mono:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Thonburi",
+    "Leelawadee UI", "Noto Sans Thai", monospace;
 
   /*
    * Type scale (rem). Base = current paragraph size (13px → 1rem).
@@ -19,11 +21,11 @@
    *   base body / paragraphs
    *   lg   doc page titles
    */
-  --text-xs: 0.85rem;     /* ~11px — labels, nav, meta */
-  --text-sm: 0.92rem;     /* ~12px — code, secondary UI */
-  --text-base: 1rem;      /* 13px — paragraph / body */
-  --text-lg: 1.08rem;     /* ~14px — doc titles */
-  --text-title: 1.5rem;   /* product h1 */
+  --text-xs: 0.85rem; /* ~11px — labels, nav, meta */
+  --text-sm: 0.92rem; /* ~12px — code, secondary UI */
+  --text-base: 1rem; /* 13px — paragraph / body */
+  --text-lg: 1.08rem; /* ~14px — doc titles */
+  --text-title: 1.5rem; /* product h1 */
   --leading-tight: 1.3;
   --leading-snug: 1.45;
   --leading-normal: 1.55;
@@ -99,7 +101,10 @@ html {
   font-weight: 600;
   letter-spacing: 0.04em;
   line-height: 1;
-  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
 }
 
 /* Icon-only buttons collapse text metrics; SVGs still center fine */
@@ -270,6 +275,17 @@ nav.site-nav {
   border-bottom: 1px solid var(--border);
 }
 
+/* Trailing divider that fills whatever space remains in the nav
+ * after the last tab. Keeps the bottom border running flush to the
+ * right edge so the tab row reads as a single continuous bar. */
+.site-nav__divider--fill {
+  width: auto;
+  flex: 1 1 auto;
+  align-self: stretch;
+  border: none;
+  border-bottom: 1px solid var(--border);
+}
+
 nav.site-nav > a {
   display: inline-flex;
   align-items: center;
@@ -285,7 +301,9 @@ nav.site-nav > a {
   /* border: 1px solid #000; /* Figma `border-black` */
   /* border-bottom: 1px solid #000; */
   border-radius: 0.5rem 0.5rem 0 0; /* TOP corners only, 8px */
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
 }
 
 nav.site-nav > a:hover {
@@ -408,7 +426,9 @@ ol.steps li::before {
   text-decoration: none;
   color: inherit;
   background: transparent;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
 }
 
 .cell:last-child {
@@ -468,7 +488,8 @@ code {
 pre {
   border: 1px solid var(--border);
   background: var(--code-bg);
-  padding: var(--code-pad-y, 0.75rem) 2.6rem var(--code-pad-y, 0.75rem) var(--code-pad-x, 0.85rem);
+  padding: var(--code-pad-y, 0.75rem) 2.6rem var(--code-pad-y, 0.75rem)
+    var(--code-pad-x, 0.85rem);
   font-size: var(--text-sm);
   line-height: var(--leading-normal);
   margin: 0.5rem 0;
@@ -508,7 +529,10 @@ pre code {
   border: 1px solid var(--border);
   cursor: pointer;
   line-height: 0;
-  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
 }
 
 .code-block .copy-btn__icon {
@@ -562,7 +586,9 @@ pre code {
   padding: 0.55rem 0.65rem;
   font-size: var(--text-sm);
   color: inherit;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
 }
 
 .cta-row a:hover {
@@ -686,39 +712,65 @@ footer.site-footer p:last-child {
 }
 
 /*
- * Small screens (<=480px).
- * - Tighter body padding
- * - Container fills viewport with 0.5rem inset
- * - Tabs wrap to multiple rows
- * - Title reserves room on the right for the fixed chrome-toggles
- * - Code blocks wrap instead of horizontally scrolling
- * - Section spacing tightens
+ * Mobile (<=768px).
+ *
+ * #main becomes the gutter: 20px side padding so the bordered card
+ * and nav inset from the viewport edge. Header / nav / wrap all
+ * fill #main's content area — their desktop centering is reset.
+ *
+ * Tabs shrink to a compact size. They wrap to multiple rows on
+ * narrow phones; that's fine because:
+ *   - each divider's bottom border draws a thin underline under
+ *     every row
+ *   - the trailing fill divider extends that underline to the
+ *     right edge on the last row, mirroring the desktop visual
+ *     where the nav's underline is the visual top of the wrap
+ *
+ * Title reserves room on the right for the fixed chrome-toggles.
+ * Code blocks wrap instead of horizontally scrolling.
  */
-@media (max-width: 480px) {
+@media (max-width: 768px) {
+  #main {
+    padding: 0 20px;
+  }
+
   body {
     padding: 0 0 2rem;
   }
 
-  .wrap {
-    margin: 2.5rem 0.5rem 1rem;
+  header.site-header {
+    max-width: none;
     width: auto;
-    border-radius: 0.4rem;
+    margin: 1.5rem 0 0;
+    padding: 1rem 0 0.6rem;
+  }
+
+  .wrap {
+    max-width: none;
+    width: auto;
+    margin: 0 0 2rem;
   }
 
   nav.site-nav {
-    padding: 0 0.75rem;
-    margin: -0.55rem 0 0 0.75rem;
-    gap: 0.3rem;
+    max-width: none;
+    width: auto;
+    margin: 0;
+    gap: 0.15rem;
   }
 
   nav.site-nav > a {
-    padding: 0.4rem 0.75rem;
-    letter-spacing: 0.04em;
+    padding: 0.5rem 0.7rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.03em;
+    border-radius: 0.4rem 0.4rem 0 0;
   }
 
-  header.site-header {
-    padding: 1.1rem 1rem 0.5rem;
+  .site-nav__divider {
+    width: 2px;
   }
+
+  /* Fill divider is SHOWN on mobile — it extends the row underline
+   * to the right edge on the last wrapped row. */
 
   /* Reserve right padding so titles never slide under the chrome-toggles */
   header.site-header h1 {
@@ -732,6 +784,13 @@ footer.site-footer p:last-child {
 
   .doc-title {
     padding-right: 2.5rem;
+  }
+
+  .wrap > .lede,
+  .wrap > .crumb {
+    padding-top: 1rem;
+    margin-bottom: 1.25rem;
+    font-size: 1.05rem;
   }
 
   /* Code blocks wrap instead of overflowing */
@@ -780,10 +839,73 @@ footer.site-footer p:last-child {
 }
 
 /*
- * Medium screens (481px–767px) — bridge between mobile and tablet.
+ * Tablet (769px–1024px).
+ *
+ * #main has a 40px gutter so the bordered card and nav have
+ * comfortable breathing room. Tab sizing is a touch smaller than
+ * desktop so all 5 docs tabs (and 6 with Issues on /) fit on a
+ * single row on common tablet widths; the fill divider still
+ * extends the underline when they don't.
  */
-@media (min-width: 481px) and (max-width: 767px) {
-  header.site-header h1 {
-    padding-right: 4rem;
+@media (min-width: 769px) and (max-width: 1024px) {
+  #main {
+    padding: 0 40px;
+  }
+
+  header.site-header {
+    max-width: none;
+    width: auto;
+    margin: 2rem 0 0;
+    padding: 0 0 1rem;
+  }
+
+  .wrap {
+    max-width: none;
+    width: auto;
+    margin: 0 0 2.5rem;
+  }
+
+  nav.site-nav {
+    max-width: none;
+    width: auto;
+  }
+
+  nav.site-nav > a {
+    padding: 0.6rem 1.1rem;
+    font-size: 0.92rem;
+    letter-spacing: 0.04em;
+  }
+
+  .site-nav__divider {
+    width: 3px;
+  }
+}
+
+/*
+ * Extra-narrow phones (<=360px) — tighter gutter (16px) and the
+ * smallest tab sizing so 5 docs tabs wrap to a tidy 2 rows on
+ * iPhone SE-class widths.
+ */
+@media (max-width: 360px) {
+  #main {
+    padding: 0 16px;
+  }
+
+  nav.site-nav > a {
+    padding: 0.45rem 0.55rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.02em;
+  }
+
+  .site-nav__divider {
+    width: 1px;
+  }
+
+  .wrap {
+    padding: 0 0 1rem;
+  }
+
+  header.site-header {
+    padding: 0.85rem 0 0.5rem;
   }
 }
