@@ -198,14 +198,18 @@
     btn.setAttribute("title", label);
   }
 
+  function syncThemeVisuals() {
+    var theme = currentTheme();
+    syncBrandMascot(theme);
+    syncLedeMascot(theme);
+    syncThemeButton(theme);
+  }
+
   function initThemeToggle() {
     var btn = document.getElementById("theme-toggle");
     if (!btn || btn.getAttribute("data-theme-ready") === "1") return;
     btn.setAttribute("data-theme-ready", "1");
-    syncThemeButton(currentTheme());
-    /* Sync the brand + lede mascots to whichever theme is being shown. */
-    syncBrandMascot(currentTheme());
-    syncLedeMascot(currentTheme());
+    syncThemeVisuals();
     btn.addEventListener("click", function () {
       applyTheme(currentTheme() === "dark" ? "light" : "dark");
     });
@@ -282,6 +286,8 @@
 
   document.body.addEventListener("htmx:afterSettle", function (evt) {
     var target = evt.detail && evt.detail.target;
+    /* The server-rendered partial does not know the client's theme. */
+    syncThemeVisuals();
     enhanceAll(target || document);
   });
 })();
