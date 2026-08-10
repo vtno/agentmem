@@ -204,7 +204,6 @@ func (s *server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	w.Header().Set("Content-Language", lang)
-	w.Header().Set("Cache-Control", "no-cache")
 	// Persist explicit ?lang= choice so htmx / follow-up navigations keep it.
 	if q := strings.TrimSpace(r.URL.Query().Get("lang")); q != "" {
 		http.SetCookie(w, &http.Cookie{
