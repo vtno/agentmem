@@ -214,23 +214,36 @@ header.site-header .brand:hover {
 .wrap > .lede,
 .wrap > .crumb {
   margin: 0 0 1.5rem;
-  padding-top: 1.25rem;
+  padding-top: 1.5rem;
   font-weight: 500;
   line-height: 1.45;
   max-width: 32em;
 }
 
 .wrap > .lede {
-  font-family: "Playpen Sans Thai", cursive;
-  font-size: 2.5rem;
+  font-family: cursive;
   font-style: normal;
   color: var(--fg);
+  display: flex;
+  gap: 16px;
+}
+
+.wrap > .lede:lang(en) {
+  font-family: "Caveat", cursive;
+  font-size: clamp(1.7rem, 1.4rem + 1.5vw, 2.5rem);
+}
+
+.wrap > .lede:lang(th) {
+  font-family: "Playpen Sans Thai", cursive;
+  font-size: clamp(1.5rem, 1.25rem + 1.3vw, 2rem);
 }
 
 .lede-mascot {
   margin-left: 12px;
   rotate: 8deg;
   margin-bottom: -8px;
+  object-fit: contain;
+  margin-top: -8px;
 }
 
 .wrap > .crumb {
@@ -823,7 +836,6 @@ footer.site-footer p:last-child {
     max-width: none;
     width: auto;
     margin: 0;
-    gap: 0.15rem;
   }
 
   nav.site-nav > a {
