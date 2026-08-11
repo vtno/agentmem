@@ -5,6 +5,34 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{.T "title"}}</title>
 <meta name="description" content="{{.T "description"}}">
+
+<!--
+  SEO + social. The page URL is rebuilt from URLBase (flag-controlled,
+  defaults to the production origin) + Path + ?lang=<current>. This
+  keeps the canonical correct behind any reverse proxy without touching
+  the template per-environment.
+-->
+<link rel="canonical" href="{{.URLBase}}{{.Path}}?lang={{.Lang}}">
+<link rel="alternate" hreflang="en" href="{{.URLBase}}{{.Path}}?lang=en">
+<link rel="alternate" hreflang="th" href="{{.URLBase}}{{.Path}}?lang=th">
+<link rel="alternate" hreflang="x-default" href="{{.URLBase}}{{.Path}}">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="agentmem">
+<meta property="og:title" content="{{.T "title"}}">
+<meta property="og:description" content="{{.T "description"}}">
+<meta property="og:url" content="{{.URLBase}}{{.Path}}?lang={{.Lang}}">
+<meta property="og:image" content="{{.URLBase}}/assets/opengraph-agentmem.png">
+<meta property="og:locale" content="{{.LangTag}}">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{.T "title"}}">
+<meta name="twitter:description" content="{{.T "description"}}">
+<meta name="twitter:image" content="{{.URLBase}}/assets/opengraph-agentmem.png">
+
+<!-- Mobile browser chrome (Safari address bar, Android task switcher). -->
+<meta name="theme-color" content="#9ee22e" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#141413" media="(prefers-color-scheme: dark)">
 <script>
 (function () {
   /* Only lock theme when the user has toggled; otherwise follow system. */
@@ -43,7 +71,12 @@
   } catch (e) {}
 })();
 </script>
-<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" href="/assets/favicon/favicon-96x96.png" sizes="96x96">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon/favicon.svg">
+<link rel="shortcut icon" href="/assets/favicon/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-title" content="Agentmem">
+<link rel="manifest" href="/assets/favicon/site.webmanifest">
 <link rel="stylesheet" href="/assets/vendor/fonts/caveat.css">
 <link rel="stylesheet" href="/assets/vendor/fonts/playpen-sans-thai.css">
 <link rel="stylesheet" href="/assets/vendor/fonts/space-mono.css">
@@ -58,6 +91,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-5862T3G8');</script>
 <!-- End Google Tag Manager -->
+
+<!--
+  Structured data: schema.org SoftwareApplication. Kept single-line so
+  the Go template can safely interpolate page-localised strings
+  (description is i18n-controlled and trusted) without breaking JSON.
+-->
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"agentmem","description":"{{.T "description"}}","url":"{{.URLBase}}{{.Path}}?lang={{.Lang}}","applicationCategory":"DeveloperApplication","operatingSystem":"macOS, Linux, Windows","image":"{{.URLBase}}/assets/opengraph-agentmem.png","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"THAMTECH Co., Ltd.","url":"https://www.thamtech.co/"}}</script>
 </head>
 <body hx-boost="true" hx-ext="preload" hx-target="#content" hx-select="#content" hx-swap="innerHTML show:none settle:0 swap:0">
 <!-- Google Tag Manager (noscript) -->

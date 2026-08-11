@@ -53,6 +53,8 @@ type view struct {
 	LangTag string // html lang attribute
 	pageKey string
 	cat     catalog
+	URLBase string // absolute base URL (e.g. https://agentmem.thamtech.co) for canonical + OG tags
+	Path    string // request path (no query, no fragment)
 }
 
 // T looks up page-local then common keys (or absolute dotted paths).
@@ -105,10 +107,17 @@ var routes = map[string]page{
 	},
 }
 
+// baseURL is the absolute origin used for canonical + Open Graph URLs.
+// Overridden via -url-base; defaults to the production origin.
+var baseURL = "https://agentmem.thamtech.co"
+
 func main() {
 	addr := flag.String("addr", ":5555", "listen address")
+	urlBase := flag.String("url-base", baseURL, "absolute base URL for canonical + OG tags")
 	showVersion := flag.Bool("version", false, "print version and exit")
 	flag.Parse()
+
+	baseURL = strings.TrimRight(*urlBase, "/")
 
 	if *showVersion {
 		fmt.Println(version)
@@ -157,6 +166,14 @@ func (s *server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		s.serveStatic(w, r, strings.TrimPrefix(p, "/"))
 		return
 	}
+	if p == "/robots.txt" {
+		s.serveStatic(w, r, "static/robots.txt")
+		return
+	}
+	if p == "/sitemap.xml" {
+		s.serveStatic(w, r, "static/sitemap.xml")
+		return
+	}
 	if p == "/install" {
 		s.serveEmbedded(w, r, "install", "text/plain; charset=utf-8")
 		return
@@ -200,6 +217,8 @@ func (s *server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		LangTag: lang,
 		pageKey: normalizePage(pg.Content),
 		cat:     cat,
+		URLBase: baseURL,
+		Path:    p,
 	}
 
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")

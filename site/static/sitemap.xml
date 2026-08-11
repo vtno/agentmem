@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://agentmem.thamtech.co/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://agentmem.thamtech.co/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://agentmem.thamtech.co/?lang=th"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://agentmem.thamtech.co/"/>
+  </url>
+  <url>
+    <loc>https://agentmem.thamtech.co/docs/install</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://agentmem.thamtech.co/docs/install?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://agentmem.thamtech.co/docs/install?lang=th"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://agentmem.thamtech.co/docs/install"/>
+  </url>
+  <url>
+    <loc>https://agentmem.thamtech.co/docs/commands</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://agentmem.thamtech.co/docs/commands?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://agentmem.thamtech.co/docs/commands?lang=th"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://agentmem.thamtech.co/docs/commands"/>
+  </url>
+  <url>
+    <loc>https://agentmem.thamtech.co/docs/integrations</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://agentmem.thamtech.co/docs/integrations?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://agentmem.thamtech.co/docs/integrations?lang=th"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://agentmem.thamtech.co/docs/integrations"/>
+  </url>
+  <url>
+    <loc>https://agentmem.thamtech.co/docs/how-it-works</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://agentmem.thamtech.co/docs/how-it-works?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://agentmem.thamtech.co/docs/how-it-works?lang=th"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://agentmem.thamtech.co/docs/how-it-works"/>
+  </url>
+</urlset>
