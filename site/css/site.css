@@ -764,6 +764,43 @@ footer.site-footer a:hover {
   color: var(--fg);
 }
 
+/* "MADE BY THAMTECH" credit — the only deliberately loud element in
+ * the otherwise muted footer. A bordered pill in the brand green,
+ * with an external-link glyph that nudges up-right on hover so the
+ * affordance reads as "leaves the site" without an arrow icon. */
+.made-by {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid #9ee22e;
+  color: var(--fg);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.made-by::after {
+  content: "↗";
+  font-size: 1em;
+  line-height: 1;
+  transition: transform 0.15s ease;
+}
+
+.made-by:hover {
+  background-color: #9ee22e;
+  color: #1c1c1a;
+  border-color: #9ee22e;
+}
+
+.made-by:hover::after {
+  transform: translate(2px, -2px);
+}
+
 footer.site-footer p {
   font-size: var(--text-xs);
   margin-bottom: 0.3rem;
