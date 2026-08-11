@@ -254,20 +254,71 @@
     btn.setAttribute("title", label);
   }
 
+  /* Set (or replace) lang= via URLSearchParams — never append a second copy. */
+  function applyLangParam(url, lang) {
+    url.searchParams.set("lang", lang);
+    return url;
+  }
+
+  /* Keep internal navigations on the active locale for htmx boost,
+   * preload, and history URLs. Skip external, hash, asset, and .md links. */
+  function withLang(href, lang) {
+    if (!href || href.charAt(0) === "#" || href.indexOf("mailto:") === 0) {
+      return href;
+    }
+    try {
+      var u = new URL(href, window.location.origin);
+      if (u.origin !== window.location.origin) return href;
+      if (
+        u.pathname.indexOf("/css/") === 0 ||
+        u.pathname.indexOf("/js/") === 0 ||
+        u.pathname.indexOf("/assets/") === 0
+      ) {
+        return href;
+      }
+      if (/\.md$/i.test(u.pathname)) return href;
+      applyLangParam(u, lang);
+      return u.pathname + u.search + u.hash;
+    } catch (e) {
+      return href;
+    }
+  }
+
+  function stampLangLinks(root) {
+    var lang = currentLang();
+    var scope = root && root.querySelectorAll ? root : document;
+    var links = scope.querySelectorAll("a[href]");
+    for (var i = 0; i < links.length; i++) {
+      var a = links[i];
+      if (a.getAttribute("hx-boost") === "false") continue;
+      var href = a.getAttribute("href");
+      var next = withLang(href, lang);
+      if (next !== href) a.setAttribute("href", next);
+    }
+  }
+
+  function persistLangCookie(lang) {
+    try {
+      document.cookie =
+        "lang=" + lang + ";path=/;max-age=31536000;SameSite=Lax";
+    } catch (e) {}
+  }
+
   function initLangToggle() {
     var btn = document.getElementById("lang-toggle");
     if (!btn || btn.getAttribute("data-lang-ready") === "1") return;
     btn.setAttribute("data-lang-ready", "1");
+    /* Cookie is set client-side so HTML with ?lang= stays free of
+     * Set-Cookie and Cloudflare can cache EN/TH as separate URLs. */
+    persistLangCookie(currentLang());
     syncLangButton();
+    stampLangLinks(document);
     btn.addEventListener("click", function () {
       var next = currentLang() === "th" ? "en" : "th";
-      try {
-        document.cookie =
-          "lang=" + next + ";path=/;max-age=31536000;SameSite=Lax";
-      } catch (e) {}
-      /* Full navigation: language is server-rendered (outside htmx partial). */
-      var url = new URL(window.location.href);
-      url.searchParams.set("lang", next);
+      persistLangCookie(next);
+      /* Full navigation: chrome (lang toggle) is outside the htmx
+       * #content partial, so locale must re-render the whole page. */
+      var url = applyLangParam(new URL(window.location.href), next);
       window.location.assign(url.pathname + url.search + url.hash);
     });
   }
@@ -284,10 +335,27 @@
     onReady();
   }
 
+  /* Ensure the request path has exactly one lang= (set/replace). Do not
+   * also put lang on detail.parameters — htmx would append a second copy
+   * when the href already includes ?lang=. */
+  document.body.addEventListener("htmx:configRequest", function (evt) {
+    if (!evt.detail || !evt.detail.path) return;
+    try {
+      var u = new URL(evt.detail.path, window.location.origin);
+      if (u.origin !== window.location.origin) return;
+      applyLangParam(u, currentLang());
+      evt.detail.path = u.pathname + u.search + u.hash;
+      if (evt.detail.parameters && "lang" in evt.detail.parameters) {
+        delete evt.detail.parameters.lang;
+      }
+    } catch (e) {}
+  });
+
   document.body.addEventListener("htmx:afterSettle", function (evt) {
     var target = evt.detail && evt.detail.target;
     /* The server-rendered partial does not know the client's theme. */
     syncThemeVisuals();
+    stampLangLinks(target || document);
     enhanceAll(target || document);
   });
 })();

@@ -63,6 +63,40 @@ func (v view) T(key string) string {
 	return v.cat.t(v.pageKey, key)
 }
 
+// L builds an internal path that preserves the active locale for htmx
+// and full-page navigations. Accepts paths like "/docs/install" or
+// "/docs/integrations#claude-code". External URLs and bare fragments
+// are returned unchanged.
+func (v view) L(p string) string {
+	if p == "" || p == "#" || strings.HasPrefix(p, "http://") || strings.HasPrefix(p, "https://") || strings.HasPrefix(p, "//") || strings.HasPrefix(p, "mailto:") {
+		return p
+	}
+	frag := ""
+	if i := strings.IndexByte(p, '#'); i >= 0 {
+		frag = p[i:]
+		p = p[:i]
+	}
+	if p == "" {
+		return frag
+	}
+	// Replace an existing lang= query if present; otherwise append.
+	if i := strings.IndexByte(p, '?'); i >= 0 {
+		q := p[i+1:]
+		p = p[:i]
+		parts := strings.Split(q, "&")
+		out := make([]string, 0, len(parts)+1)
+		for _, part := range parts {
+			if part == "" || strings.HasPrefix(part, "lang=") {
+				continue
+			}
+			out = append(out, part)
+		}
+		out = append(out, "lang="+v.Lang)
+		return p + "?" + strings.Join(out, "&") + frag
+	}
+	return p + "?lang=" + v.Lang + frag
+}
+
 var routes = map[string]page{
 	"/": {
 		Content:  "index",
@@ -223,16 +257,18 @@ func (s *server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	w.Header().Set("Content-Language", lang)
-	// Persist explicit ?lang= choice so htmx / follow-up navigations keep it.
-	if q := strings.TrimSpace(r.URL.Query().Get("lang")); q != "" {
-		http.SetCookie(w, &http.Cookie{
-			Name:     "lang",
-			Value:    lang,
-			Path:     "/",
-			MaxAge:   365 * 24 * 60 * 60,
-			SameSite: http.SameSiteLaxMode,
-			HttpOnly: false, // readable by the client toggle if needed
-		})
+	// Cache strategy for Cloudflare:
+	//   - ?lang=en / ?lang=th are distinct URLs → separate edge objects.
+	//   - No Set-Cookie on those responses (CF skips cache when Set-Cookie is present).
+	//   - Bare paths resolve from cookie / Accept-Language and stay private so
+	//     one visitor's locale is never served to another from edge cache.
+	// Locale sticky preference is written client-side (see site/js/index.js).
+	if strings.TrimSpace(r.URL.Query().Get("lang")) != "" {
+		// Browser: short freshness. Edge (s-maxage): long; purge on deploy if needed.
+		w.Header().Set("Cache-Control", "public, max-age=60, s-maxage=86400")
+	} else {
+		w.Header().Set("Cache-Control", "private, no-cache")
+		w.Header().Set("Vary", "Cookie, Accept-Language")
 	}
 	if r.Method == http.MethodHead {
 		w.WriteHeader(http.StatusOK)

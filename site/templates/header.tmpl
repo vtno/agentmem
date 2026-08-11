@@ -1,6 +1,6 @@
 {{define "header"}}
   <header class="site-header">
-    <a href="/" class="brand">
+    <a href="{{.L "/"}}" class="brand">
       <img id="brand-mascot" src="/assets/icons/agentmem-mascot-normal-light.png" alt="" width="32" height="32">
       <span>{{.T "common.brand"}}</span>
     </a>
@@ -9,19 +9,19 @@
 
 {{define "nav"}}
   <nav class="site-nav" aria-label="{{.T "common.nav.aria"}}">
-    <a href="/"{{if .Home}} aria-current="page"{{end}}>HOME</a>
+    <a href="{{.L "/"}}"{{if .Home}} aria-current="page"{{end}}>HOME</a>
     <span class="site-nav__divider" aria-hidden="true"></span>
-    <a href="/docs/install"{{if eq .Nav "install"}} aria-current="page"{{end}}>{{.T "common.nav.install"}}</a>
+    <a href="{{.L "/docs/install"}}"{{if eq .Nav "install"}} aria-current="page"{{end}}>{{.T "common.nav.install"}}</a>
     <span class="site-nav__divider" aria-hidden="true"></span>
-    <a href="/docs/commands"{{if eq .Nav "commands"}} aria-current="page"{{end}}>{{.T "common.nav.commands"}}</a>
+    <a href="{{.L "/docs/commands"}}"{{if eq .Nav "commands"}} aria-current="page"{{end}}>{{.T "common.nav.commands"}}</a>
     <span class="site-nav__divider" aria-hidden="true"></span>
-    <a href="/docs/integrations"{{if eq .Nav "integrations"}} aria-current="page"{{end}}>{{.T "common.nav.integrations"}}</a>
+    <a href="{{.L "/docs/integrations"}}"{{if eq .Nav "integrations"}} aria-current="page"{{end}}>{{.T "common.nav.integrations"}}</a>
     <span class="site-nav__divider" aria-hidden="true"></span>
-    <a href="/docs/how-it-works"{{if eq .Nav "how-it-works"}} aria-current="page"{{end}}>{{.T "common.nav.how_it_works"}}</a>
+    <a href="{{.L "/docs/how-it-works"}}"{{if eq .Nav "how-it-works"}} aria-current="page"{{end}}>{{.T "common.nav.how_it_works"}}</a>
     <span class="site-nav__divider" aria-hidden="true"></span>
-    <a href="https://github.com/vtno/agentmem/releases">{{.T "common.nav.releases"}} ➚</a>
+    <a href="https://github.com/vtno/agentmem/releases" target="_blank" rel="noopener noreferrer">{{.T "common.nav.releases"}} ➚</a>
     <span class="site-nav__divider" aria-hidden="true"></span>
-    <a href="https://github.com/vtno/agentmem/issues">{{.T "common.nav.issues"}} ➚</a>
+    <a href="https://github.com/vtno/agentmem/issues" target="_blank" rel="noopener noreferrer">{{.T "common.nav.issues"}} ➚</a>
     <span class="site-nav__divider site-nav__divider--fill" aria-hidden="true"></span>
   </nav>
 {{end}}

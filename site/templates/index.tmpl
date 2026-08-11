@@ -3,10 +3,10 @@
     <p>{{.T "hook_p1"}}</p>
     <p>{{.T "hook_p2"}}</p>
     <pre><code>{{.T "install_cmd"}}</code></pre>
-    <a class="cta" href="/docs/install">{{.T "cta_install"}}</a>
+    <a class="cta" href="{{.L "/docs/install"}}">{{.T "cta_install"}}</a>
     <div class="cta-row">
-      <a href="https://github.com/vtno/agentmem/releases">{{.T "cta_releases"}}</a>
-      <a href="https://github.com/vtno/agentmem/issues">{{.T "cta_issues"}}</a>
+      <a href="https://github.com/vtno/agentmem/releases" target="_blank" rel="noopener noreferrer">{{.T "cta_releases"}}</a>
+      <a href="https://github.com/vtno/agentmem/issues" target="_blank" rel="noopener noreferrer">{{.T "cta_issues"}}</a>
     </div>
   </section>
 
@@ -31,15 +31,15 @@
 
   <section class="section">
     <div class="section__label">{{.T "harnesses.label"}}</div>
-    <a class="cell" href="/docs/integrations#claude-code">
+    <a class="cell" href="{{.L "/docs/integrations#claude-code"}}">
       <div class="cell__title">{{.T "harnesses.claude_title"}}</div>
       <div class="cell__desc">{{.T "harnesses.claude_desc"}}</div>
     </a>
-    <a class="cell" href="/docs/integrations#opencode">
+    <a class="cell" href="{{.L "/docs/integrations#opencode"}}">
       <div class="cell__title">{{.T "harnesses.opencode_title"}}</div>
       <div class="cell__desc">{{.T "harnesses.opencode_desc"}}</div>
     </a>
-    <a class="cell" href="/docs/integrations#other">
+    <a class="cell" href="{{.L "/docs/integrations#other"}}">
       <div class="cell__title">{{.T "harnesses.other_title"}}</div>
       <div class="cell__desc">{{.T "harnesses.other_desc"}}</div>
     </a>
@@ -47,19 +47,19 @@
 
   <section class="section">
     <div class="section__label">{{.T "docs.label"}}</div>
-    <a class="cell" href="/docs/install">
+    <a class="cell" href="{{.L "/docs/install"}}">
       <div class="cell__title">{{.T "docs.install_title"}}</div>
       <div class="cell__desc">{{.T "docs.install_desc"}}</div>
     </a>
-    <a class="cell" href="/docs/commands">
+    <a class="cell" href="{{.L "/docs/commands"}}">
       <div class="cell__title">{{.T "docs.commands_title"}}</div>
       <div class="cell__desc">{{.T "docs.commands_desc"}}</div>
     </a>
-    <a class="cell" href="/docs/integrations">
+    <a class="cell" href="{{.L "/docs/integrations"}}">
       <div class="cell__title">{{.T "docs.integrations_title"}}</div>
       <div class="cell__desc">{{.T "docs.integrations_desc"}}</div>
     </a>
-    <a class="cell" href="/docs/how-it-works">
+    <a class="cell" href="{{.L "/docs/how-it-works"}}">
       <div class="cell__title">{{.T "docs.how_title"}}</div>
       <div class="cell__desc">{{.T "docs.how_desc"}}</div>
     </a>

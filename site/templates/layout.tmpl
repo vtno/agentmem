@@ -147,7 +147,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <img id="lede-mascot" class="lede-mascot" src="/assets/icons/agentmem-mascot-heart-dark.png" alt="" width="50">
       </p>
       {{else}}
-      <p class="crumb"><a href="/">{{.T "common.crumb.home"}}</a> · {{.T "common.crumb.docs"}} / {{.T "heading"}}</p>
+      <p class="crumb"><a href="{{.L "/"}}">{{.T "common.crumb.home"}}</a> · {{.T "common.crumb.docs"}} / {{.T "heading"}}</p>
       {{end}}
 
       {{if eq .Content "index"}}{{template "index" .}}
