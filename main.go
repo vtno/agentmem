@@ -238,7 +238,14 @@ func (s *server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	lang := pickLang(r)
+	// Locale for HTML is only ?lang= (default en). Cookie / Accept-Language
+	// must not affect the body: Cloudflare would BYPASS private/varied HTML
+	// and every first hit to / would go to origin. Client JS redirects TH
+	// users to ?lang=th (see layout.tmpl + site/js/index.js).
+	lang := "en"
+	if strings.TrimSpace(r.URL.Query().Get("lang")) != "" {
+		lang = pickLang(r)
+	}
 	cat, err := loadCatalog(s.fsys, lang)
 	if err != nil {
 		log.Printf("i18n: %v", err)
@@ -257,19 +264,8 @@ func (s *server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	w.Header().Set("Content-Language", lang)
-	// Cache strategy for Cloudflare:
-	//   - ?lang=en / ?lang=th are distinct URLs → separate edge objects.
-	//   - No Set-Cookie on those responses (CF skips cache when Set-Cookie is present).
-	//   - Bare paths resolve from cookie / Accept-Language and stay private so
-	//     one visitor's locale is never served to another from edge cache.
-	// Locale sticky preference is written client-side (see site/js/index.js).
-	if strings.TrimSpace(r.URL.Query().Get("lang")) != "" {
-		// Browser: short freshness. Edge (s-maxage): long; purge on deploy if needed.
-		w.Header().Set("Cache-Control", "public, max-age=60, s-maxage=86400")
-	} else {
-		w.Header().Set("Cache-Control", "private, no-cache")
-		w.Header().Set("Vary", "Cookie, Accept-Language")
-	}
+	// Distinct URLs for en/th; no Set-Cookie (CF will not cache those).
+	w.Header().Set("Cache-Control", "public, max-age=60, s-maxage=86400")
 	if r.Method == http.MethodHead {
 		w.WriteHeader(http.StatusOK)
 		return
@@ -374,9 +370,9 @@ func (s *server) serveEmbedded(w http.ResponseWriter, r *http.Request, rel, cont
 	w.Header().Set("Content-Type", contentType)
 	w.Header().Set("Content-Length", fmt.Sprintf("%d", len(data)))
 	if strings.HasPrefix(rel, "css/") || strings.HasPrefix(rel, "js/") || strings.HasPrefix(rel, "assets/") {
-		w.Header().Set("Cache-Control", "public, max-age=3600")
+		w.Header().Set("Cache-Control", "public, max-age=3600, s-maxage=86400")
 	} else {
-		w.Header().Set("Cache-Control", "no-cache")
+		w.Header().Set("Cache-Control", "public, max-age=60, s-maxage=86400")
 	}
 	w.WriteHeader(http.StatusOK)
 	if r.Method == http.MethodHead {

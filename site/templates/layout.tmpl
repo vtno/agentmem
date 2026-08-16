@@ -35,6 +35,26 @@
 <meta name="theme-color" content="#141413" media="(prefers-color-scheme: dark)">
 <script>
 (function () {
+  /* Bare paths are always EN at the edge. Send TH users to ?lang=th
+   * before paint so cookie / Accept-Language still win without
+   * making / uncacheable. */
+  try {
+    if (!/[?&]lang=/.test(location.search)) {
+      var lang = "";
+      var m = document.cookie.match(/(?:^|; )lang=([^;]*)/);
+      if (m) lang = decodeURIComponent(m[1]);
+      if (lang !== "th" && lang !== "en") {
+        var nav = (navigator.languages && navigator.languages[0]) || navigator.language || "";
+        if (String(nav).toLowerCase().indexOf("th") === 0) lang = "th";
+      }
+      if (lang === "th") {
+        var u = new URL(location.href);
+        u.searchParams.set("lang", "th");
+        location.replace(u.pathname + u.search + u.hash);
+      }
+    }
+  } catch (e) {}
+
   /* Only lock theme when the user has toggled; otherwise follow system. */
   try {
     var t = localStorage.getItem("agentmem-theme");

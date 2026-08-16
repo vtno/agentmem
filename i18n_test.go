@@ -1,6 +1,7 @@
 package main
 
 import (
+	"html/template"
 	"io/fs"
 	"net/http"
 	"net/http/httptest"
@@ -122,5 +123,47 @@ func TestPickLang(t *testing.T) {
 		r.AddCookie(&http.Cookie{Name: "lang", Value: "th"})
 	})); got != "en" {
 		t.Fatalf("query over cookie = %q", got)
+	}
+}
+
+func TestHTMLCacheHeadersPublic(t *testing.T) {
+	site, err := fs.Sub(embeddedSite, "site")
+	if err != nil {
+		t.Fatal(err)
+	}
+	tmpl, err := template.ParseFS(site, "templates/*.tmpl")
+	if err != nil {
+		t.Fatal(err)
+	}
+	h := &server{fsys: site, tmpl: tmpl}
+
+	wantPublic := "public, max-age=60, s-maxage=86400"
+
+	cases := []struct {
+		url  string
+		lang string
+	}{
+		{"/", "en"},
+		{"/?lang=th", "th"},
+		{"/docs/install", "en"},
+	}
+	for _, tc := range cases {
+		r := httptest.NewRequest(http.MethodGet, tc.url, nil)
+		r.AddCookie(&http.Cookie{Name: "lang", Value: "th"})
+		r.Header.Set("Accept-Language", "th")
+		w := httptest.NewRecorder()
+		h.ServeHTTP(w, r)
+		if w.Code != http.StatusOK {
+			t.Fatalf("%s status %d", tc.url, w.Code)
+		}
+		if got := w.Header().Get("Cache-Control"); got != wantPublic {
+			t.Fatalf("%s Cache-Control = %q, want %q", tc.url, got, wantPublic)
+		}
+		if w.Header().Get("Set-Cookie") != "" {
+			t.Fatalf("%s must not Set-Cookie", tc.url)
+		}
+		if got := w.Header().Get("Content-Language"); got != tc.lang {
+			t.Fatalf("%s Content-Language = %q, want %q", tc.url, got, tc.lang)
+		}
 	}
 }
