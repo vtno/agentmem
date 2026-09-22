@@ -182,16 +182,16 @@ jobs:
         if: ${{ inputs.publish != true }}
         run: echo "Validation passed; publish=false, so no GitHub Release was created."
 
+      - name: Check out public repository
+        if: ${{ inputs.publish == true }}
+        uses: actions/checkout@v4
+
       - name: Download dist
         if: ${{ inputs.publish == true }}
         uses: actions/download-artifact@v4
         with:
           name: dist
           path: dist
-
-      - name: Check out public repository
-        if: ${{ inputs.publish == true }}
-        uses: actions/checkout@v4
 
       - name: Create release
         if: ${{ inputs.publish == true }}
