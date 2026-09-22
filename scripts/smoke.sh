@@ -39,8 +39,8 @@ step "add (quick note)"
 "$bin" add "a quick note line"
 
 step "list"
-"$bin" list | grep -F "smoke.md"
-"$bin" list | grep -F "piped.md"
+"$bin" list | grep -F "smoke"
+"$bin" list | grep -F "piped"
 
 step "show"
 "$bin" show smoke | grep -F "hello from smoke"
@@ -51,7 +51,7 @@ step "search"
 
 step "reindex"
 "$bin" reindex
-"$bin" list | grep -F "smoke.md"
+"$bin" list | grep -F "smoke"
 
 step "serve (MCP initialize over stdio)"
 mcp_out=$( {
@@ -84,12 +84,12 @@ ui_pid=""
 
 step "rm"
 "$bin" rm smoke
-if "$bin" list | grep -F "](smoke.md)" >/dev/null; then
+if "$bin" list | grep -E '^[[:space:]]+smoke[[:space:]]' >/dev/null; then
 	echo "smoke still in index after rm" >&2
 	exit 1
 fi
 "$bin" rm piped
-"$bin" list | grep -F "](piped.md)" >/dev/null && {
+"$bin" list | grep -E '^[[:space:]]+piped[[:space:]]' >/dev/null && {
 	echo "piped still in index after rm" >&2
 	exit 1
 }
