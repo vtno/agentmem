@@ -104,12 +104,13 @@ install:
     cmd: "curl -fsSL https://agentmem.thamtech.co/install | sh"
     note: >
       สคริปต์จะตรวจ OS และสถาปัตยกรรม หลังจากนั้นจะดาวน์โหลดเวอร์ชั่นที่ตรงกันจาก GitHub Releases
-      และติดตั้ง memory ไปที่ ~/.local/bin (หรือ /usr/local/bin ถ้าใช้ได้)
+      ตรวจสอบ SHA-256 และติดตั้ง memory ไปที่ ~/.local/bin
+      ใช้ INSTALL_DIR เพื่อเลือกโฟลเดอร์อื่น
   platforms:
     label: แพลตฟอร์ม
     macos: macOS amd64 และ arm64
     linux: Linux amd64 และ arm64
-    windows: Windows amd64 และ arm64 (zip จาก Releases; ใส่ memory.exe บน PATH)
+    windows: Windows amd64 (zip จาก Releases; ใส่ memory.exe บน PATH)
   manual:
     label: ติดตั้งเอง
     step1: เปิด GitHub Releases แล้วดาวน์โหลดไฟล์สำหรับแพลตฟอร์มของคุณ
@@ -117,7 +118,7 @@ install:
     step3: chmod +x memory แล้วย้ายไปไว้บน PATH
     step4: เช็คด้วย memory --help หรือ memory targets
     note: >
-      Checksum อยู่ที่ checksums.txt ในแต่ละเวอร์ชั่น ไม่มี go install จากซอร์ส
+      Checksum อยู่ที่ SHA256SUMS ในแต่ละเวอร์ชั่น ไม่มี go install จากซอร์ส
       — ซอร์สเป็นแบบปิด
   wire:
     label: เชื่อมกับ agent

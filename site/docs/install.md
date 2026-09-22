@@ -12,7 +12,7 @@ One-liner (macOS / Linux):
 curl -fsSL https://agentmem.thamtech.co/install | sh
 ```
 
-The script detects your OS and architecture, downloads the matching release from [GitHub Releases](https://github.com/vtno/agentmem/releases), and installs `memory` to `~/.local/bin` (or `/usr/local/bin` when available).
+The script detects your OS and architecture, downloads the matching release from [GitHub Releases](https://github.com/vtno/agentmem/releases), verifies its SHA-256 checksum, and installs `memory` to `~/.local/bin`. Set `INSTALL_DIR` to choose another location.
 
 ## Platforms
 
@@ -27,7 +27,7 @@ The script detects your OS and architecture, downloads the matching release from
 3. `chmod +x memory` and move it onto your PATH
 4. Verify with `memory --help` or `memory targets`
 
-Checksums ship as `checksums.txt` on each release. Source install via `go install` is not offered — the source repository is private.
+Checksums ship as `SHA256SUMS` on each release. Source install via `go install` is not offered — the source repository is private.
 
 ## Wire your agent
 

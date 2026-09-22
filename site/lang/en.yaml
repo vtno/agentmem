@@ -105,12 +105,13 @@ install:
     cmd: "curl -fsSL https://agentmem.thamtech.co/install | sh"
     note: >
       The script detects your OS and architecture, downloads the matching release from
-      GitHub Releases, and installs memory to ~/.local/bin (or /usr/local/bin when available).
+      GitHub Releases, verifies SHA-256, and installs memory to ~/.local/bin.
+      Set INSTALL_DIR to choose another location.
   platforms:
     label: Platforms
     macos: macOS amd64 and arm64
     linux: Linux amd64 and arm64
-    windows: Windows amd64 and arm64 (zip from Releases; put memory.exe on PATH)
+    windows: Windows amd64 (zip from Releases; put memory.exe on PATH)
   manual:
     label: Manual install
     step1: Open GitHub Releases and download the archive for your platform
@@ -118,7 +119,7 @@ install:
     step3: chmod +x memory and move it onto your PATH
     step4: Verify with memory --help or memory targets
     note: >
-      Checksums ship as checksums.txt on each release. Source install via
+      Checksums ship as SHA256SUMS on each release. Source install via
       go install is not offered — the source repository is private.
   wire:
     label: Wire your agent

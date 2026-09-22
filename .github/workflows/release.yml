@@ -1,0 +1,208 @@
+name: release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to embed and publish (for example, 0.1.0)"
+        required: true
+        type: string
+      source_ref:
+        description: "agentmem-core branch or tag to build (normally v<version>)"
+        required: true
+        type: string
+      publish:
+        description: "Create the public GitHub Release after validation"
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: release-${{ inputs.version }}
+  cancel-in-progress: false
+
+env:
+  SOURCE_REPO: vtno/agentmem-core
+
+jobs:
+  dist:
+    name: dist
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.resolve.outputs.version }}
+      source_sha: ${{ steps.source_sha.outputs.sha }}
+    steps:
+      - name: Resolve and validate inputs
+        id: resolve
+        env:
+          VERSION_INPUT: ${{ inputs.version }}
+          SOURCE_REF_INPUT: ${{ inputs.source_ref }}
+        run: |
+          set -euo pipefail
+          if ! printf '%s\n' "$VERSION_INPUT" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+([.-][0-9A-Za-z.-]+)?$'; then
+            echo "Invalid version: $VERSION_INPUT" >&2
+            exit 1
+          fi
+          case "$SOURCE_REF_INPUT" in
+            main) ;;
+            v[0-9]*)
+              if [ "$SOURCE_REF_INPUT" != "v$VERSION_INPUT" ]; then
+                echo "source_ref must match version: expected v$VERSION_INPUT, got $SOURCE_REF_INPUT" >&2
+                exit 1
+              fi
+              ;;
+            *)
+              echo "source_ref must be main or a v-prefixed release tag" >&2
+              exit 1
+              ;;
+          esac
+          {
+            echo "version=$VERSION_INPUT"
+            echo "ref=$SOURCE_REF_INPUT"
+            echo "tag=v$VERSION_INPUT"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Check out public repository
+        uses: actions/checkout@v4
+
+      - name: Check out agentmem-core source
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.SOURCE_REPO }}
+          ref: ${{ steps.resolve.outputs.ref }}
+          path: src
+          token: ${{ secrets.AGENTMEM_SOURCE_TOKEN }}
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Record source revision
+        id: source_sha
+        run: echo "sha=$(git -C src rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: src/go.mod
+          cache-dependency-path: src/go.sum
+          cache: true
+
+      - name: Build all platforms
+        working-directory: src
+        env:
+          VERSION: ${{ steps.resolve.outputs.version }}
+        run: make dist VERSION="$VERSION"
+
+      - name: Verify checksums
+        run: (cd src/dist && sha256sum -c ./SHA256SUMS)
+
+      - name: Smoke test (linux/amd64)
+        env:
+          VERSION: ${{ steps.resolve.outputs.version }}
+        run: |
+          set -euo pipefail
+          tmp=$(mktemp -d)
+          trap 'rm -rf "$tmp"' EXIT
+          tar -xzf "src/dist/memory_${VERSION}_linux_amd64.tar.gz" -C "$tmp"
+          bash scripts/smoke.sh "$tmp/memory_${VERSION}_linux_amd64"
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: src/dist/
+
+  smoke-darwin:
+    name: smoke (darwin/arm64)
+    needs: dist
+    # This standard public macOS label is Apple Silicon. The architecture
+    # assertion below prevents silently testing the wrong artifact.
+    runs-on: macos-15
+    steps:
+      - name: Confirm Apple Silicon runner
+        run: test "$(uname -m)" = arm64
+
+      - name: Check out public repository
+        uses: actions/checkout@v4
+
+      - name: Download dist
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+      - name: Smoke test (darwin/arm64)
+        env:
+          VERSION: ${{ needs.dist.outputs.version }}
+        run: |
+          set -euo pipefail
+          tmp=$(mktemp -d)
+          trap 'rm -rf "$tmp"' EXIT
+          tar -xzf "dist/memory_${VERSION}_darwin_arm64.tar.gz" -C "$tmp"
+          bash scripts/smoke.sh "$tmp/memory_${VERSION}_darwin_arm64"
+
+  smoke-windows:
+    name: smoke (windows/amd64)
+    needs: dist
+    runs-on: windows-latest
+    steps:
+      - name: Check out public repository
+        uses: actions/checkout@v4
+
+      - name: Download dist
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+      - name: Unpack windows artifact
+        shell: pwsh
+        run: Expand-Archive "dist/memory_${{ needs.dist.outputs.version }}_windows_amd64.zip" -DestinationPath dist/windows
+
+      - name: Smoke test (windows/amd64)
+        shell: bash
+        env:
+          VERSION: ${{ needs.dist.outputs.version }}
+        run: bash scripts/smoke.sh "dist/windows/memory_${VERSION}_windows_amd64.exe"
+
+  publish:
+    name: publish release
+    needs: [dist, smoke-darwin, smoke-windows]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      TAG: v${{ needs.dist.outputs.version }}
+      PUBLISH: ${{ inputs.publish }}
+    steps:
+      - name: Dry run complete
+        if: ${{ inputs.publish != true }}
+        run: echo "Validation passed; publish=false, so no GitHub Release was created."
+
+      - name: Download dist
+        if: ${{ inputs.publish == true }}
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+      - name: Check out public repository
+        if: ${{ inputs.publish == true }}
+        uses: actions/checkout@v4
+
+      - name: Create release
+        if: ${{ inputs.publish == true }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ needs.dist.outputs.source_sha }}
+        run: |
+          set -euo pipefail
+          gh release create "$TAG" \
+            --target "$GITHUB_SHA" \
+            --title "agentmem $TAG" \
+            --notes "agentmem $TAG — built from agentmem-core $SOURCE_SHA. memory_<v>_<os>_<arch> artifacts, SHA256SUMS included." \
+            dist/*
+          echo "Published release $TAG"

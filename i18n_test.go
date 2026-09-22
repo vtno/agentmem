@@ -167,3 +167,26 @@ func TestHTMLCacheHeadersPublic(t *testing.T) {
 		}
 	}
 }
+
+func TestInstallScriptIsEmbedded(t *testing.T) {
+	site, err := fs.Sub(embeddedSite, "site")
+	if err != nil {
+		t.Fatal(err)
+	}
+	tmpl, err := template.ParseFS(site, "templates/*.tmpl")
+	if err != nil {
+		t.Fatal(err)
+	}
+	h := &server{fsys: site, tmpl: tmpl}
+	w := httptest.NewRecorder()
+	h.ServeHTTP(w, httptest.NewRequest(http.MethodGet, "/install", nil))
+	if w.Code != http.StatusOK {
+		t.Fatalf("/install status %d", w.Code)
+	}
+	if got := w.Header().Get("Content-Type"); got != "text/plain; charset=utf-8" {
+		t.Fatalf("/install Content-Type = %q", got)
+	}
+	if !strings.Contains(w.Body.String(), "api.github.com/repos/$repo/releases/latest") {
+		t.Fatal("/install does not resolve the GitHub latest release")
+	}
+}

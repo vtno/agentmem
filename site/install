@@ -1,0 +1,77 @@
+#!/bin/sh
+# Install the latest agentmem release from GitHub.
+#
+# Usage:
+#   curl -fsSL https://agentmem.thamtech.co/install | sh
+#   INSTALL_DIR=/some/bin curl -fsSL https://agentmem.thamtech.co/install | sh
+set -eu
+
+repo='vtno/agentmem'
+install_dir="${INSTALL_DIR:-$HOME/.local/bin}"
+
+case "$(uname -s)" in
+  Darwin) os='darwin' ;;
+  Linux)  os='linux' ;;
+  *)      echo "agentmem: unsupported operating system: $(uname -s)" >&2; exit 1 ;;
+esac
+
+case "$(uname -m)" in
+  x86_64|amd64) arch='amd64' ;;
+  arm64|aarch64) arch='arm64' ;;
+  *)             echo "agentmem: unsupported architecture: $(uname -m)" >&2; exit 1 ;;
+esac
+
+command -v curl >/dev/null 2>&1 || {
+  echo 'agentmem: curl is required to install.' >&2
+  exit 1
+}
+command -v tar >/dev/null 2>&1 || {
+  echo 'agentmem: tar is required to install.' >&2
+  exit 1
+}
+
+api="https://api.github.com/repos/$repo/releases/latest"
+release=$(curl -fsSL -H 'Accept: application/vnd.github+json' "$api") || {
+  echo 'agentmem: could not find the latest GitHub release.' >&2
+  exit 1
+}
+tag=$(printf '%s\n' "$release" | sed -n 's/.*"tag_name"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' | head -n 1)
+case "$tag" in
+  v[0-9]* ) ;;
+  * ) echo 'agentmem: latest GitHub release has no valid version tag.' >&2; exit 1 ;;
+esac
+
+version=${tag#v}
+archive="memory_${version}_${os}_${arch}.tar.gz"
+base="https://github.com/$repo/releases/download/$tag"
+tmp=$(mktemp -d)
+cleanup() { rm -rf "$tmp"; }
+trap cleanup EXIT HUP INT TERM
+
+echo "agentmem: downloading $archive ($tag)"
+curl -fsSL "$base/$archive" -o "$tmp/$archive"
+curl -fsSL "$base/SHA256SUMS" -o "$tmp/SHA256SUMS"
+
+if command -v sha256sum >/dev/null 2>&1; then
+  (cd "$tmp" && grep "  $archive\$" SHA256SUMS | sha256sum -c -)
+elif command -v shasum >/dev/null 2>&1; then
+  expected=$(awk -v file="$archive" '$2 == file { print $1 }' "$tmp/SHA256SUMS")
+  actual=$(shasum -a 256 "$tmp/$archive" | awk '{ print $1 }')
+  [ -n "$expected" ] && [ "$expected" = "$actual" ] || {
+    echo "agentmem: checksum verification failed for $archive" >&2
+    exit 1
+  }
+else
+  echo 'agentmem: sha256sum or shasum is required to verify the download.' >&2
+  exit 1
+fi
+
+tar -xzf "$tmp/$archive" -C "$tmp"
+mkdir -p "$install_dir"
+install -m 0755 "$tmp/memory_${version}_${os}_${arch}" "$install_dir/memory"
+
+echo "agentmem: installed $install_dir/memory"
+case ":$PATH:" in
+  *":$install_dir:"*) ;;
+  *) echo "agentmem: add $install_dir to your PATH, then run: memory targets" ;;
+esac
