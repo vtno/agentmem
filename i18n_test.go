@@ -52,7 +52,7 @@ func TestLoadCatalogTH(t *testing.T) {
 	if !strings.Contains(strings.ToLower(got), "agentmem") {
 		t.Fatalf("title = %q", got)
 	}
-	if got := c.t("index", "why.label"); got != "ทำไมถึงต้องใช้" {
+	if got := c.t("index", "why.label"); got != "ทำไมต้องใช้" {
 		t.Fatalf("why.label = %q", got)
 	}
 }

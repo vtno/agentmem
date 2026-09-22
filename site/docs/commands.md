@@ -92,7 +92,7 @@ memory ui --addr 127.0.0.1:8787 --no-open
 
 ### `memory install` / `uninstall`
 
-Official harnesses: skill plus hooks/plugins by default; pass `--mcp` for MCP config (hooks/plugins still applied). Portable skill target installs skill only under `~/.agents/skills` (or `--dir`) — no harness name, no hooks.
+Claude Code installs a skill and managed `CLAUDE.md` guidance; OpenCode installs a skill and plugin. Pass `--mcp` to also register the MCP server. Portable `skill` installs only under `~/.agents/skills` (or `--dir`) — no harness name or harness-specific integration.
 
 ```bash
 memory install claude-code
@@ -105,7 +105,7 @@ memory uninstall skill
 
 ### `memory targets`
 
-List supported harnesses and install status (skill, mcp, hook/plugin), plus the portable `skill` path.
+List supported harnesses and install status (skill, MCP, guidance/plugin), plus the portable `skill` path.
 
 ```bash
 memory targets

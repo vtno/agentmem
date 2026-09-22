@@ -14,6 +14,10 @@ curl -fsSL https://agentmem.thamtech.co/install | sh
 
 See [Install](/docs/install) · [Releases](https://github.com/vtno/agentmem/releases) · [Issues](https://github.com/vtno/agentmem/issues)
 
+## Now available
+
+agentmem v0.1.0 is available for macOS, Linux, and Windows. Install it with the command above or download it from [GitHub Releases](https://github.com/vtno/agentmem/releases).
+
 ## Why
 
 - **Yours** — markdown files on disk, not locked in a provider account
@@ -31,7 +35,7 @@ See [Install](/docs/install) · [Releases](https://github.com/vtno/agentmem/rele
 
 | Target | What you get |
 |--------|----------------|
-| [Claude Code](/docs/integrations#claude-code) (official) | Skill + SessionStart hook · optional MCP |
+| [Claude Code](/docs/integrations#claude-code) (official) | Skill + `CLAUDE.md` guidance · optional MCP |
 | [OpenCode](/docs/integrations#opencode) (official) | Skill + plugin · optional MCP |
 | [Other harnesses](/docs/integrations#other) | Skill only — `memory install skill` |
 

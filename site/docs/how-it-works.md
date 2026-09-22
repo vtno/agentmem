@@ -1,8 +1,10 @@
 # How it works
 
-Everything is a folder of markdown files you own. The CLI is a thin tool over that folder — no database, no cloud, no embedding model. Harnesses plug in via skill, hooks, or MCP; the store stays the same when you switch tools.
+Everything is a folder of markdown files you own. The CLI is a thin tool over that folder — no database, no cloud, no embedding model. Harnesses plug in via skill, native integration, or MCP; the store stays the same when you switch tools.
 
 [← Home](/) · [Integrations](/docs/integrations) · [Commands](/docs/commands)
+
+[Watch the agentmem overview on YouTube](https://youtu.be/0pbBQcfS5Q4)
 
 ## Storage
 
@@ -51,9 +53,9 @@ memory ui --no-open
 ## Philosophy
 
 - **Yours** — files on disk, not locked to a provider or single harness
-- **Pluggable** — skill, MCP, and official hooks/plugins; same memory folder
+- **Pluggable** — skill, MCP, and native Claude Code or OpenCode integration; same memory folder
 - **Portable** — plain markdown, easy to inspect and edit
-- **Small** — one binary, fast startup (important when hooks call the CLI often)
+- **Small** — one binary with fast startup
 - **Vectorless** — no embeddings, no sync daemon, no LLM inside the CLI
 
 ---

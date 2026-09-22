@@ -20,21 +20,21 @@ curl -fsSL https://agentmem.thamtech.co/install | sh
 
 ### เชื่อมกับ harness
 
-Harness ที่รองรับอย่างเป็นทางการ (skill + enforcement hooks/plugins):
+แพลตฟอร์มที่รองรับอย่างเป็นทางการ:
 
 ```bash
 memory install claude-code
 memory install opencode
 ```
 
-MCP (hooks/plugins ยังถูกติดตั้งบนเป้าหมายทางการ):
+MCP (ลงทะเบียน MCP server เพิ่มเติม โดยยังคงคำแนะนำหรือ plugin ปกติไว้):
 
 ```bash
 memory install --mcp claude-code
 memory install --mcp opencode
 ```
 
-Harness อื่น ๆ ที่โหลด skill ได้ (portable skill เท่านั้น — ไม่มี hooks หรือ plugins):
+แพลตฟอร์มอื่นที่โหลด skill ได้ (portable skill เท่านั้น — ไม่มีการเชื่อมต่อเฉพาะแพลตฟอร์ม):
 
 ```bash
 memory install skill
@@ -132,7 +132,7 @@ memory rm <name>              # ลบความจำ
 memory reindex                # สร้าง MEMORY.md ใหม่
 memory serve                  # MCP server บน stdio
 memory ui                     # web UI บนเครื่อง (loopback)
-memory install <harness>      # skill + hooks/plugins (claude-code, opencode)
+memory install <harness>      # Claude Code: skill + CLAUDE.md; OpenCode: skill + plugin
 memory install --mcp <harness>
 memory install skill [--dir <dir>]
 memory uninstall …
@@ -147,9 +147,9 @@ memory targets                # สถานะการติดตั้ง ha
 
 | เป้าหมาย | สิ่งที่ได้ |
 |--------|----------------|
-| **Claude Code** (ทางการ) | Skill + SessionStart hook · MCP เป็นตัวเลือก |
+| **Claude Code** (ทางการ) | Skill + คำแนะนำที่จัดการใน `CLAUDE.md` · ใช้ MCP ได้ |
 | **OpenCode** (ทางการ) | Skill + plugin · MCP เป็นตัวเลือก |
-| **skill** (พกพา) | Skill อย่างเดียวใต้ `~/.agents/skills` — ไม่มี enforcement |
+| **skill** (พกพา) | Skill อย่างเดียวใต้ `~/.agents/skills` — ไม่มีการเชื่อมต่อเฉพาะแพลตฟอร์ม |
 
 ## รายงานปัญหาและเวอร์ชั่น
 

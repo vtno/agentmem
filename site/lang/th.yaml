@@ -1,40 +1,39 @@
-# Thai strings for the agentmem site.
-# Root keys are page names (plus "common" for shared chrome).
-# CLI commands and code samples stay in English.
+# ข้อความภาษาไทยสำหรับเว็บไซต์ agentmem
+# คำสั่ง CLI และตัวอย่างโค้ดคงไว้เป็นภาษาอังกฤษ
 
 common:
   brand: agentmem
   theme:
-    to_light: สลับเป็นโหมดสว่าง
-    to_dark: สลับเป็นโหมดมืด
+    to_light: ใช้โหมดสว่าง
+    to_dark: ใช้โหมดมืด
   lang:
     to_en: Switch to English
-    to_th: สลับเป็นภาษาไทย
+    to_th: เปลี่ยนเป็นภาษาไทย
     code_en: EN
     code_th: TH
   chrome:
-    aria: ตัวควบคุมการแสดงผล
+    aria: การตั้งค่าการแสดงผล
   harnesses:
-    label: Harness ที่รองรับ
+    label: แพลตฟอร์มเอเจนต์ที่รองรับ
     claude_title: Claude Code
-    claude_desc: skill + hook · ผ่าน MCP ได้ →
+    claude_desc: skill + CLAUDE.md · ใช้ MCP ได้ →
     opencode_title: OpenCode
-    opencode_desc: skill + plugin · ผ่าน MCP ได้ →
-    other_title: Harness อื่น
-    other_desc: skill · ผ่าน MCP ได้ →
+    opencode_desc: skill + plugin · ใช้ MCP ได้ →
+    other_title: แพลตฟอร์มอื่น
+    other_desc: skill · ใช้ MCP ได้ →
   nav:
     install: ติดตั้ง
     commands: คำสั่ง
     integrations: การเชื่อมต่อ
-    how_it_works: หลักการทำงาน
-    releases: เวอร์ชั่น
-    issues: รายงานปัญหา
+    how_it_works: วิธีทำงาน
+    releases: ดาวน์โหลด
+    issues: แจ้งปัญหา
     aria: เมนูหลัก
   footer:
-    free: ใช้ฟรีทั้งส่วนตัวและเชิงพาณิชย์ ซอร์สเป็นแบบปิด
-    markdown: Markdown สำหรับ เไ
+    free: ใช้ได้ฟรีทั้งส่วนตัวและเชิงพาณิชย์ ซอร์สโค้ดยังเป็นแบบปิด
+    markdown: Markdown สำหรับ AI
     home: หน้าแรก
-    releases: เวอร์ชั่น
+    releases: ดาวน์โหลด
     github: github.com/vtno/agentmem
   crumb:
     home: ← หน้าแรก
@@ -47,133 +46,137 @@ common:
   next:
     commands: คำสั่ง →
     integrations: การเชื่อมต่อ →
-    how_it_works: หลักการทำงาน →
+    how_it_works: วิธีทำงาน →
     home: หน้าแรก
 
 index:
-  title: "Agentmem — ระบบความทรงจำแบบไม่ใช้เวกเตอร์สำหรับ AI agent"
-  description: "หน่วยความจำแบบปลั๊กอิน ไม่ใช้เวกเตอร์ ใช้ได้กับ agent harness ใดก็ได้ ไฟล์ markdown บนเครื่องคุณ — ไม่ถูกล็อกกับผู้ให้บริการ"
+  title: "agentmem — หน่วยความจำแบบไม่ใช้เวกเตอร์สำหรับ AI agent"
+  description: "ชั้นความจำแบบไม่ใช้เวกเตอร์สำหรับ agent ทุกแพลตฟอร์ม ไฟล์ Markdown อยู่บนเครื่องคุณ ไม่ผูกกับผู้ให้บริการรายใด"
   tagline: หน่วยความจำแบบไม่ใช้เวกเตอร์สำหรับ AI agent
   hook_p1: >
-    Agent ไม่มีความทรงจำข้ามเซสชั่นและที่แย่ไปกว่านั้นก็คือเมื่อความทรงจำถูกผูกกับผู้ให้บริการโมเดลหรือ harness เดียว
-    ข้อตกลง การตัดสินใจ และความรู้เกี่ยวกับโปรเจกต์ของคุณจะหายไปพร้อมผลิตภัณฑ์เหล่านั้น
+    เอเจนต์มักลืมสิ่งที่คุยกันไป และยิ่งแย่เมื่อความจำถูกผูกไว้กับผู้ให้บริการโมเดลหรือแพลตฟอร์มเดียว
+    ข้อตกลง การตัดสินใจ และความรู้ของโปรเจกต์จึงหายไปเมื่อคุณเปลี่ยนเครื่องมือ
   hook_p2: >
-    Agentmem เป็นชั้นความจำแบบปลั๊กอินที่คุณเป็นเจ้าของ ไฟล์ markdown ธรรมดาบนเครื่อง
-    บริหารจัดการโดยไบนารีตัวเดียว เชื่อมกับ agent ที่รัน shell หรือต่อ MCP ได้ ความทรงจำของ agent จึงอยู่กับคุณ
-    เมื่อเปลี่ยนเครื่องมือ ข้อมูลของคุณเป็นของคุณอย่างแท้จริง
+    agentmem คือชั้นความจำที่คุณเป็นเจ้าของ เก็บเป็นไฟล์ Markdown ธรรมดาบนเครื่อง
+    ใช้ไบนารี memory เพียงตัวเดียว และเชื่อมต่อกับเอเจนต์ใดก็ได้ที่เรียก shell หรือ MCP ได้
+    เปลี่ยนเครื่องมือเมื่อไร ความจำก็ยังอยู่กับคุณ
   install_cmd: "curl -fsSL https://agentmem.thamtech.co/install | sh"
-  cta_install: คู่มือการติดตั้ง →
+  cta_install: คู่มือติดตั้ง →
   cta_releases: GitHub Releases
-  cta_issues: รายงานปัญหา
+  cta_issues: แจ้งปัญหา
+  release:
+    label: พร้อมใช้งานแล้ว
+    body: agentmem v0.1.0 พร้อมใช้งานบน macOS, Linux และ Windows ติดตั้งด้วยคำสั่งด้านบน หรือดาวน์โหลดจาก GitHub Releases
   why:
-    label: ทำไมถึงต้องใช้
+    label: ทำไมต้องใช้
     yours_title: เป็นของคุณ
-    yours_body: ไฟล์ markdown บนดิสก์ ไม่ถูกล็อกในบัญชีผู้ให้บริการ
+    yours_body: ไฟล์ Markdown บนดิสก์ ไม่ถูกล็อกไว้ในบัญชีของผู้ให้บริการ
     pluggable_title: เชื่อมต่อง่าย
-    pluggable_body: ติดตั้ง skill หรือ MCP ใช้ร่วมกับ harness ที่คุณใช้อยู่
-    portable_title: พกพาง่าย
-    portable_body: เปลี่ยน agent แต่ใช้ความทรงจำเดิม
-    vectorless_title: ไม่ใช้ฐานข้อมูลเวกเตอร์
-    vectorless_body: ไม่มี embedding ไม่มี daemon ไม่ต้องต่ออินเทอร์เน็ต
+    pluggable_body: ใช้ skill หรือ MCP กับแพลตฟอร์มเอเจนต์ที่คุณใช้อยู่
+    portable_title: ย้ายไปที่ไหนก็ได้
+    portable_body: เปลี่ยนเอเจนต์ได้โดยใช้โฟลเดอร์ความจำเดิม
+    vectorless_title: ไม่ใช้เวกเตอร์
+    vectorless_body: ไม่มี embedding ไม่มี daemon และไม่ต้องใช้คลาวด์
   quick_start:
-    label: วิธีใช้
-    step1: ติดตั้งไบนารี memory (สคริปต์ curl หรือ Releases)
-    step2: "เชื่อม: memory install claude-code, opencode หรือ memory install skill สำหรับ harness อื่น"
-    step3: Agent อ่านและเขียนในไดเรคทอรี่เดียวกัน — ความทรงจำตามไปกับคุณ
+    label: เริ่มต้นใช้งาน
+    step1: ติดตั้งไบนารี memory ด้วยสคริปต์ curl หรือจาก Releases
+    step2: "เชื่อมต่อด้วย memory install claude-code, memory install opencode หรือ memory install skill สำหรับแพลตฟอร์มอื่น"
+    step3: เอเจนต์อ่านและเขียนโฟลเดอร์เดียวกัน ความจำจึงย้ายตามคุณไปได้
   docs:
-    label: คู่มือ
+    label: เอกสาร
     install_title: ติดตั้ง
-    install_desc: แพลตฟอร์ม สคริปต์ curl ดาวน์โหลดเอง เชื่อม harness →
+    install_desc: ดาวน์โหลดไบนารีและเชื่อมต่อเอเจนต์ →
     commands_title: คำสั่ง
-    commands_desc: อ้างอิง CLI list, add, search, ui, serve และอื่นๆ →
+    commands_desc: คู่มืออ้างอิงคำสั่ง CLI →
     integrations_title: การเชื่อมต่อ
-    integrations_desc: Claude Code, OpenCode, skill กับ MCP →
-    how_title: หลักการทำงาน
-    how_desc: โครงเก็บไฟล์ ดัชนี MEMORY.md UI ภายใน →
+    integrations_desc: Claude Code, OpenCode, skill และ MCP →
+    how_title: วิธีทำงาน
+    how_desc: โครงสร้างไฟล์ ดัชนี MEMORY.md และ UI ในเครื่อง →
 
 install:
-  title: "การติดตั้ง — agentmem"
-  description: ติดตั้งไบนารี memory ของ agentmem และเชื่อม Claude Code, OpenCode หรือ harness ที่โหลด skill ได้
-  heading: การติดตั้ง
+  title: "ติดตั้ง — agentmem"
+  description: ติดตั้งไบนารี memory ของ agentmem และเชื่อมต่อกับ Claude Code, OpenCode หรือแพลตฟอร์มที่ใช้ skill ได้
+  heading: ติดตั้ง
   lead: >
-    นำไบนารี memory ไปเพิ่มใน PATH แล้วเชื่อมกับ harness สำหรับ harness ที่รองรับอย่างเป็นทางการจะมีการบังคับใช้ผ่าน
-    hooks หรือ plugins สำหรับ harness อื่น ๆ สามารถใช้ผ่าน skill ได้
+    ติดตั้งไบนารี memory ไว้ใน PATH แล้วเชื่อมต่อกับแพลตฟอร์มเอเจนต์ที่ใช้
+    Claude Code จะได้ skill และคำแนะนำใน CLAUDE.md ส่วน OpenCode จะได้ skill และ plugin
+    แพลตฟอร์มอื่นใช้ portable skill ได้
   recommended:
-    label: วิธีการแนะนำ
-    oneliner: "ลงด้วยคำสั่งเดียว (macOS / Linux):"
+    label: วิธีที่แนะนำ
+    oneliner: "คำสั่งเดียวสำหรับ macOS / Linux:"
     cmd: "curl -fsSL https://agentmem.thamtech.co/install | sh"
     note: >
-      สคริปต์จะตรวจ OS และสถาปัตยกรรม หลังจากนั้นจะดาวน์โหลดเวอร์ชั่นที่ตรงกันจาก GitHub Releases
-      ตรวจสอบ SHA-256 และติดตั้ง memory ไปที่ ~/.local/bin
-      ใช้ INSTALL_DIR เพื่อเลือกโฟลเดอร์อื่น
+      สคริปต์จะตรวจระบบปฏิบัติการและสถาปัตยกรรม ดาวน์โหลดไฟล์ที่ตรงจาก GitHub Releases
+      ตรวจสอบ SHA-256 แล้วติดตั้ง memory ไว้ที่ ~/.local/bin
+      กำหนด INSTALL_DIR ได้หากต้องการใช้ไดเรกทอรีอื่น
   platforms:
-    label: แพลตฟอร์ม
-    macos: macOS amd64 และ arm64
-    linux: Linux amd64 และ arm64
-    windows: Windows amd64 (zip จาก Releases; ใส่ memory.exe บน PATH)
+    label: แพลตฟอร์มที่รองรับ
+    macos: macOS แบบ amd64 และ arm64
+    linux: Linux แบบ amd64 และ arm64
+    windows: Windows แบบ amd64 (ดาวน์โหลด zip จาก Releases แล้วเพิ่ม memory.exe ลงใน PATH)
   manual:
-    label: ติดตั้งเอง
+    label: ติดตั้งด้วยตนเอง
     step1: เปิด GitHub Releases แล้วดาวน์โหลดไฟล์สำหรับแพลตฟอร์มของคุณ
     step2: แตกไฟล์ไบนารี memory
-    step3: chmod +x memory แล้วย้ายไปไว้บน PATH
-    step4: เช็คด้วย memory --help หรือ memory targets
+    step3: รัน chmod +x memory แล้ววางไฟล์ไว้ใน PATH
+    step4: ตรวจสอบด้วย memory --help หรือ memory targets
     note: >
-      Checksum อยู่ที่ SHA256SUMS ในแต่ละเวอร์ชั่น ไม่มี go install จากซอร์ส
-      — ซอร์สเป็นแบบปิด
+      แต่ละรุ่นมีไฟล์ SHA256SUMS สำหรับตรวจสอบ checksum ไม่มีการติดตั้งด้วย go install
+      เพราะซอร์สโค้ดเป็นแบบปิด
   wire:
-    label: เชื่อมกับ agent
-    official: "Harness ที่รองรับอย่างเป็นทางการ (skill + enforcement):"
+    label: เชื่อมต่อเอเจนต์ของคุณ
+    official: "แพลตฟอร์มที่รองรับอย่างเป็นทางการ:"
     official_cmd: |
       memory install claude-code
       memory install opencode
-    mcp: "MCP (hooks/plugins ยังถูกติดตั้งบนเป้าหมายทางการ):"
+    mcp: "MCP (ลงทะเบียน MCP server เพิ่มเติม โดยยังคงคำแนะนำหรือ plugin ปกติไว้):"
     mcp_cmd: |
       memory install --mcp claude-code
       memory install --mcp opencode
     other: >
-      Harness อื่น ๆ — ลงเฉพาะ skill ไปยัง ~/.agents/skills
-      (ไม่มี hooks/plugins; skill ไม่ใช่ชื่อ harness):
+      แพลตฟอร์มอื่น — ติดตั้งเฉพาะ portable skill ไว้ใต้ ~/.agents/skills
+      (ไม่มีคำแนะนำเฉพาะของ Claude Code หรือ plugin ของ OpenCode และ skill ไม่ใช่ชื่อแพลตฟอร์ม):
     other_cmd: |
       memory install skill
       memory install skill --dir /path/to/skills
-    remove: "ถอดการเชื่อมภายหลัง:"
+    remove: "ถอดการเชื่อมต่อภายหลัง:"
     remove_cmd: |
       memory uninstall claude-code
       memory uninstall --mcp opencode
       memory uninstall skill
     note: >
-      ใช้ memory targets แสดงสถานะการติดตั้ง สามารถดู integrations ว่าแต่ละโหมดเขียนข้อมูลไปที่ไหน
-      หมายเหตุ: ไดเรคทอรี skill ของ OpenCode ตรงกับค่าเริ่มต้นของ skill ที่ติดตั้งโดย memory install skill
-      (~/.agents/skills) เป็นความตั้งใจให้เข้ากันได้กับ harness อื่น ๆ ที่โหลด skill ได้
+      ใช้ memory targets เพื่อตรวจสถานะการติดตั้ง และดูหน้าการเชื่อมต่อเพื่อทราบว่าแต่ละโหมดเขียนอะไรบ้าง
+      ไดเรกทอรี skill เริ่มต้นของ OpenCode ตรงกับ memory install skill คือ ~/.agents/skills
+      เพื่อให้ใช้ร่วมกับแพลตฟอร์มที่รองรับ skill ได้
   config:
     label: การตั้งค่า
-    dir: "ไดเรคทอรี่ความจำเริ่มต้น: ~/.agentmem/"
-    env: เปลี่ยนด้วย AGENTMEM_DIR
+    dir: "ไดเรกทอรีความจำเริ่มต้น: ~/.agentmem/"
+    env: เปลี่ยนได้ด้วย AGENTMEM_DIR
 
 commands:
   title: "คำสั่ง — agentmem"
-  description: อ้างอิง CLI ของไบนารี memory ใน agentmem
+  description: คู่มืออ้างอิง CLI ของไบนารี memory ใน agentmem
   heading: คำสั่ง
   lead: >
-    ไบนารีชื่อ memory ชื่อรายการอาจใช้ / สำหรับโฟลเดอร์
-    (เช่น project/api) บน Windows รับ \ แล้วแปลงเป็นมาตรฐาน
+    ไบนารีชื่อ memory ชื่อรายการใช้ / เพื่อแบ่งเป็นโฟลเดอร์ได้
+    (เช่น project/api) บน Windows ใช้ \ ได้และระบบจะแปลงเป็นรูปแบบมาตรฐาน
   browse:
     label: เรียกดู
     list_title: "memory list [prefix]"
-    list_body: แสดงสารบัญที่สร้างขึ้น (เทียบเท่ากับ MEMORY.md เมื่ออัปเดตแล้ว) สามารถใส่ prefix เพื่อฟีลเตอร์ตามกลุ่มได้ (เช่น project)
+    list_body: แสดงดัชนีที่สร้างขึ้น (เทียบเท่า MEMORY.md เมื่อเป็นปัจจุบัน) ใส่ prefix เพื่อจำกัดผลลัพธ์ตามกลุ่มได้ เช่น project
     list_cmd: |
       memory list
       memory list project
     show_title: "memory show <name>"
-    show_body: แสดงไฟล์ความจำหนึ่งไฟล์
+    show_body: แสดงไฟล์ความจำหนึ่งรายการ
     show_cmd: memory show project/conventions
     search_title: "memory search <query>"
-    search_body: ค้นหาในความทรงจำ แสดงค่าไฟล์ที่ตรงและบทย่อจากไฟล์นั้น ๆ
+    search_body: ค้นหาข้อความเต็มในความจำทั้งหมด แล้วแสดงไฟล์และข้อความโดยย่อที่ตรงกัน
     search_cmd: memory search conventions
   write:
-    label: เขียน
+    label: เขียนและจัดการ
     add_title: memory add
-    add_body: เขียนความทรงจำเพิ่มลงไปในโน้ตแบบไว ๆ หรือเขียนความทรงจำที่มีชื่อ ไฟล์ที่มีชื่อต้องมี --summary คำสั่งจะอ่าน stdin เมื่อไม่มีอาร์กิวเมนต์ข้อความ
+    add_body: เพิ่มโน้ตสั้น ๆ หรือเขียนไฟล์ที่มีชื่อ ไฟล์ที่มีชื่อต้องระบุ --summary หากไม่ส่งข้อความเป็นอาร์กิวเมนต์ คำสั่งจะอ่านจาก stdin
     add_cmd: |
       memory add "remember to run tests before push"
       memory add --file project/conventions --summary "[project] Go conventions" "Wrap errors. Keep comments rare."
@@ -181,32 +184,31 @@ commands:
       Prefer terse replies. No preamble.
       EOF
     edit_title: "memory edit <name>"
-    edit_body: เปิดไฟล์ความจำใน $EDITOR
+    edit_body: เปิดไฟล์ความจำด้วย $EDITOR
     edit_cmd: memory edit user/prefs
     rm_title: "memory rm <name>"
-    rm_body: ลบไฟล์ความจำและรายการในสารบัญ
+    rm_body: ลบไฟล์ความจำและรายการของไฟล์นั้นออกจากดัชนี
     rm_cmd: memory rm scratch/old-idea
     reindex_title: memory reindex
-    reindex_body: ปรับโครงสร้าง MEMORY.md ใหม่จากไฟล์ความจำหลังการแก้ไข
+    reindex_body: สร้าง MEMORY.md ใหม่จากไฟล์ความจำ หลังแก้ไขไฟล์ด้วยตนเอง
     reindex_cmd: memory reindex
   serve:
-    label: Serve และ UI
+    label: Server และ UI
     serve_title: memory serve
-    serve_body: รัน MCP server บน stdio (ถูก spawn โดย harness ที่ใช้ MCP)
+    serve_body: เริ่ม MCP server ผ่าน stdio เพื่อให้แพลตฟอร์มที่ใช้ MCP เรียกใช้งาน
     serve_cmd: memory serve
     ui_title: memory ui
-    ui_body: Web UI บนเครื่องสำหรับ list, search, สร้าง แก้ไข ลบ ความทรงจำโดยมนุษย์
+    ui_body: เปิดเว็บ UI ในเครื่องสำหรับดู ค้นหา สร้าง แก้ไข และลบความจำ
     ui_cmd: |
       memory ui
       memory ui --addr 127.0.0.1:8787 --no-open
   harness:
-    label: Harness
+    label: การเชื่อมต่อเอเจนต์
     install_title: memory install / uninstall
     install_body: >
-      สำหรับ harness ที่รองรับอย่างเป็นทางการ: ติดตั้ง skill กับ hooks/plugins เป็นค่าเริ่มต้น ใส่ flag --mcp สำหรับ MCP config
-      (hooks/plugins ยังถูกใช้)
-
-      harness อื่น ๆ ติดตั้งผ่าน skill อย่างเดียวใต้ ~/.agents/skills (หรือ --dir) — ไม่ใช่ชื่อ harness ไม่มี hooks
+      Claude Code ติดตั้ง skill และคำแนะนำที่จัดการใน CLAUDE.md ส่วน OpenCode ติดตั้ง skill และ plugin
+      ใช้ --mcp เพื่อลงทะเบียน MCP server เพิ่มเติม portable skill จะติดตั้งเฉพาะ skill ใต้ ~/.agents/skills
+      (หรือ --dir) โดยไม่มีการเชื่อมต่อเฉพาะแพลตฟอร์ม
     install_cmd: |
       memory install claude-code
       memory install --mcp opencode
@@ -215,128 +217,123 @@ commands:
       memory uninstall claude-code
       memory uninstall skill
     targets_title: memory targets
-    targets_body: แสดง harness ที่รองรับและสถานะการติดตั้ง (skill, mcp, hook/plugin) รวมถึง PATH ของการติดตั้ง skill
+    targets_body: แสดงแพลตฟอร์มที่รองรับและสถานะการติดตั้ง (skill, MCP, guidance/plugin) รวมถึงพาธของ portable skill
     targets_cmd: memory targets
 
 integrations:
   title: "การเชื่อมต่อ — agentmem"
-  description: เชื่อม agentmem กับ Claude Code, OpenCode หรือ harness ที่โหลด skill ได้
+  description: เชื่อม agentmem กับ Claude Code, OpenCode หรือแพลตฟอร์มใดก็ได้ที่ใช้ skill ได้
   heading: การเชื่อมต่อ
   lead: >
-    Harness ทางการได้ skill บวก enforcement (hooks/plugins) agent ที่รัน shell ได้
-    ยังใช้ skill ร่วมได้ — โดยไม่มีชั้น enforcement นั้น
+    Claude Code และ OpenCode มีการเชื่อมต่อเฉพาะนอกเหนือจาก skill
+    ส่วนเอเจนต์อื่นที่เรียก shell ได้ก็ใช้ skill เดียวกันกับโฟลเดอร์ความจำเดียวกันได้
   claude:
-    label: Claude Code · ทางการ
+    label: Claude Code · รองรับอย่างเป็นทางการ
     body: >
-      ติดตั้งค่าเริ่มต้นเขียน memory skill และ SessionStart hook เพื่อเตือน agent
-      ให้ใช้ความจำตอน resume, clear และ compaction
+      การติดตั้งปกติจะเขียน memory skill และจัดการส่วนของ agentmem ในไฟล์
+      ~/.claude/CLAUDE.md ระดับผู้ใช้ เพื่อให้ Claude Code ได้รับคำแนะนำเรื่อง memory ทุกเซสชัน
     cmd: |
       memory install claude-code
       memory install --mcp claude-code
     note: >
-      พาธ skill เหมาะกับเซสชันที่มี shell MCP เหมาะกับแซนด์บ็อกซ์หรือ MCP-first
-      SessionStart hook ถูกติดตั้งทั้งสองโหมด
+      Skill เหมาะกับเซสชันที่เรียก shell ได้ ส่วน MCP เหมาะกับสภาพแวดล้อมแบบ sandbox หรือ MCP-first
+      ทั้งสองโหมดยังคงคำแนะนำใน CLAUDE.md ไว้ และ --mcp จะลงทะเบียน memory serve ในการตั้งค่า Claude เพิ่มเติม
   opencode:
-    label: OpenCode · ทางการ
+    label: OpenCode · รองรับอย่างเป็นทางการ
     body: >
-      ติดตั้งค่าเริ่มต้นเขียน skill และ OpenCode plugin สำหรับ session hooks
-      ใช้ --mcp เมื่อต้องการลงทะเบียน MCP server ใน config ของ OpenCode
+      การติดตั้งปกติจะเขียน skill และ OpenCode plugin เพื่อเตือนให้ตรวจสอบ memory
+      ใช้ --mcp เมื่อต้องการลงทะเบียน MCP server ในไฟล์ตั้งค่าของ OpenCode
     cmd: |
       memory install opencode
       memory install --mcp opencode
   other:
-    label: Harness อื่น · skill อย่างเดียว
+    label: แพลตฟอร์มอื่น · skill เท่านั้น
     body: >
-      Agent ใดที่โหลด skill และรัน shell ได้ใช้ agentmem กับโฟลเดอร์ความจำเดียวกัน
-      ไม่มีเป้าหมายติดตั้งเฉพาะสำหรับ harness เหล่านี้ — ไม่มี SessionStart hook
-      ไม่มี plugin ไม่มีการเตือนอัตโนมัติให้เปิดหรืออัปเดตความจำ
-    install_intro: "ติดตั้ง skill (และเฉพาะ skill) อัตโนมัติ:"
+      เอเจนต์ใดก็ตามที่โหลด skill และเรียก shell ได้ สามารถใช้ agentmem กับโฟลเดอร์ความจำเดียวกัน
+      ไม่มีการเขียนคำแนะนำสำหรับ Claude Code, plugin สำหรับ OpenCode หรือการตั้งค่า MCP ให้อัตโนมัติ
+    install_intro: "ติดตั้ง portable skill อัตโนมัติ:"
     cmd: |
       memory install skill
       # override skill directory (default: ~/.agents/skills):
       memory install skill --dir /path/to/skills
     path_note: >
-      skill ไม่ใช่ชื่อ harness — ติดตั้ง portable skill เท่านั้น
-      พาธเริ่มต้นอยู่ใต้ ~/.agents เพื่อความเข้ากันได้สูงสุด
-      ~/.agents/skills/memory/SKILL.md ใช้ --dir เพื่อชี้ราก skills อื่น
-      ชี้ harness ไปที่ skill นั้น เก็บ memory บน PATH แล้วเสร็จ
-    bullet_no_hook: ไม่ติดตั้ง hook หรือ plugin — บอก agent วิธีใช้ความจำ ไม่บังคับ
-    bullet_no_combo: รวมกับ harness หรือ --mcp ไม่ได้ (เช่น install skill claude-code จะ error)
-    bullet_mcp: "ทางเลือก: ลงทะเบียน memory serve เป็น MCP ถ้า harness ถูกแซนด์บ็อกซ์"
-    bullet_rm: ถอดภายหลังด้วย memory uninstall skill (ใส่ --dir เดิมถ้าเคยใช้)
+      skill ไม่ใช่ชื่อแพลตฟอร์ม คำสั่งนี้ติดตั้ง portable skill เท่านั้น
+      พาธเริ่มต้นคือ ~/.agents/skills/memory/SKILL.md เพื่อให้เข้ากันได้กับเอเจนต์หลายตัว
+      ใช้ --dir เพื่อระบุไดเรกทอรี skills อื่น ชี้แพลตฟอร์มของคุณมายัง skill นี้และให้ memory อยู่ใน PATH ก็พร้อมใช้
+    bullet_no_hook: ไม่ติดตั้งการเชื่อมต่อเฉพาะแพลตฟอร์ม โดย skill จะบอกเอเจนต์ว่าควรใช้ memory อย่างไร
+    bullet_no_combo: ใช้ร่วมกับชื่อแพลตฟอร์มหรือ --mcp ไม่ได้ เช่น install skill claude-code จะเกิดข้อผิดพลาด
+    bullet_mcp: "ทางเลือก: ลงทะเบียน memory serve เป็น MCP หากแพลตฟอร์มอยู่ใน sandbox"
+    bullet_rm: ถอดภายหลังด้วย memory uninstall skill (ใช้ --dir เดิมหากเคยกำหนดไว้)
     prefer: >
-      แนะนำติดตั้งทางการเต็มเมื่อทำได้ — hooks และ plugins รักษาวินัยความจำ
-      ตอน resume, clear และ compaction พาธเริ่มต้นตรงกับ skill root ของ OpenCode
-      uninstall skill ลบ skill ร่วมนั้น (plugin ของ OpenCode อาจยังอยู่)
+      หากใช้ Claude Code หรือ OpenCode แนะนำให้ใช้ตัวติดตั้งทางการ เพราะจะเพิ่มคำแนะนำหรือ plugin ที่เหมาะกับแพลตฟอร์มนั้น
+      พาธเริ่มต้นตรงกับ skill root ของ OpenCode และ uninstall skill จะลบ skill ที่ใช้ร่วมกัน (แต่ plugin ของ OpenCode อาจยังอยู่)
   skill_vs_mcp:
-    label: Skill กับ MCP
-    skill: "Skill (ค่าเริ่มต้นบน harness) — agent รันคำสั่ง shell memory … ดีเมื่อ harness มี shell จริง"
-    mcp: "MCP (--mcp) — agent เรียกเครื่องมือผ่าน MCP server (memory serve) ดีกว่าสำหรับแซนด์บ็อกซ์หรือไม่มี shell"
-    hooks: "Hooks / plugins — เฉพาะ harness ทางการ บังคับ “ตรวจความจำ / บันทึกข้อเท็จจริง” portable install skill ไม่มี"
+    label: Skill และ MCP
+    skill: "Skill (ค่าเริ่มต้นสำหรับแพลตฟอร์ม) — เอเจนต์เรียกคำสั่ง memory ผ่าน shell เหมาะเมื่อมี shell ให้ใช้"
+    mcp: "MCP (--mcp) — เอเจนต์เรียกเครื่องมือผ่าน MCP server (memory serve) เหมาะกับ sandbox หรือสภาพแวดล้อมที่ไม่มี shell"
+    hooks: "การเชื่อมต่อเฉพาะแพลตฟอร์ม — Claude Code ได้คำแนะนำใน CLAUDE.md และ OpenCode ได้ plugin; portable skill จะไม่ติดตั้งสิ่งเหล่านี้"
     note: >
-      ตรวจสถานะได้ทุกเมื่อด้วย memory targets ถอดด้วย
-      memory uninstall [--mcp] <harness> หรือ
-      memory uninstall skill
+      ตรวจสถานะได้ทุกเมื่อด้วย memory targets และถอดด้วย
+      memory uninstall [--mcp] <harness> หรือ memory uninstall skill
 
 how_it_works:
-  title: "หลักการทำงาน — agentmem"
-  description: agentmem เก็บความจำเป็นไฟล์ markdown และดัชนีที่สร้างขึ้นอย่างไร
-  heading: หลักการทำงาน
+  title: "วิธีทำงาน — agentmem"
+  description: agentmem เก็บความจำเป็นไฟล์ Markdown และสร้างดัชนีจากไฟล์เหล่านั้นอย่างไร
+  heading: วิธีทำงาน
+  video_title: วิดีโอแนะนำ agentmem
   lead: >
-    ทุกอย่างคือโฟลเดอร์ markdown ที่คุณเป็นเจ้าของ CLI เป็นเครื่องมือบางๆ บนโฟลเดอร์นั้น —
-    ไม่มีฐานข้อมูล ไม่มีคลาวด์ ไม่มีโมเดล embedding Harness เชื่อมผ่าน skill, hooks หรือ MCP
-    สโตร์เหมือนเดิมเมื่อเปลี่ยนเครื่องมือ
+    ทุกอย่างเป็นโฟลเดอร์ไฟล์ Markdown ที่คุณเป็นเจ้าของ CLI เป็นเพียงเครื่องมือเล็ก ๆ ที่ทำงานกับโฟลเดอร์นั้น
+    ไม่มีฐานข้อมูล ไม่มีคลาวด์ และไม่มีโมเดล embedding เอเจนต์เชื่อมต่อผ่าน skill, การเชื่อมต่อเฉพาะแพลตฟอร์ม หรือ MCP
+    ต่อให้เปลี่ยนเครื่องมือ โฟลเดอร์ความจำก็ยังเดิม
   storage:
     label: การจัดเก็บ
-    intro: "โฟลเดอร์เริ่มต้นคือ ~/.agentmem/ (เปลี่ยนด้วย AGENTMEM_DIR):"
+    intro: "ไดเรกทอรีเริ่มต้นคือ ~/.agentmem/ (เปลี่ยนได้ด้วย AGENTMEM_DIR):"
     tree: |
       ~/.agentmem/
-        MEMORY.md              ← generated index
+        MEMORY.md              ← ดัชนีที่สร้างอัตโนมัติ
         notes.md
         project/
           conventions.md
         user/
           prefs.md
     note: >
-      ชื่ออาจมี / เพื่อจัดกลุ่มความจำที่เกี่ยวข้อง ต้นไม้บนดิสก์เป็นการจัดระเบียบ
-      ดัชนีเชิงตรรกะแสดงรายการทั้งหมดเสมอ
+      ชื่อรายการใช้ / เพื่อจัดกลุ่มความจำที่เกี่ยวข้องได้ โครงสร้างบนดิสก์มีไว้จัดระเบียบ
+      แต่ดัชนีจะแสดงรายการทั้งหมดด้วยชื่อเต็มเสมอ
   files:
     label: ไฟล์ความจำ
     body: >
-      แต่ละรายการเป็น markdown ธรรมดา บล็อกสรุป quote บรรทัดแรก (ถ้ามี) เป็น
-      แหล่งของดัชนี ทุกอย่างหลังบรรทัดว่างถัดไปคือเนื้อหา
+      แต่ละรายการเป็นไฟล์ Markdown ธรรมดา บล็อก quote บรรทัดแรก (หากมี) ใช้เป็นสรุปสำหรับดัชนี
+      เนื้อหาหลังบรรทัดว่างถัดไปคือรายละเอียดของรายการนั้น
     example: |
       > [user] prefers TypeScript, dark mode, short responses
 
       Prefers TS over JS for all new work. Wants terse replies — no preamble.
       Dark mode everywhere.
     note: >
-      ไฟล์คือแหล่งความจริงเดียว ไม่มี YAML frontmatter
+      ไฟล์เป็นแหล่งข้อมูลจริงเพียงแหล่งเดียว ไม่มี YAML frontmatter
       แท็กอย่าง [user] หรือ [project] อยู่ในบรรทัดสรุป
   index:
     label: ดัชนี
     body: >
-      MEMORY.md ถูกสร้างจากบรรทัดสรุปของแต่ละไฟล์ เพื่อให้ agent
-      สแกนว่ามีอะไรอยู่ก่อนเปิดรายละเอียด หลังแก้ไฟล์ด้วยมือ ให้รัน
-      memory reindex
+      MEMORY.md สร้างจากบรรทัดสรุปของแต่ละไฟล์ เพื่อให้เอเจนต์ดูได้ว่ามีความจำอะไรอยู่ก่อนเปิดรายละเอียด
+      หากแก้ไฟล์ด้วยมือ ให้รัน memory reindex เพื่อสร้างดัชนีใหม่
   ui:
     label: UI ในเครื่อง
     body: >
-      memory ui เปิด UI เบราว์เซอร์เฉพาะ loopback (ค่าเริ่มต้น 127.0.0.1:8787)
-      สำหรับ list, search, สร้าง แก้ไข ลบ ใช้สโตร์เดียวกับ CLI —
-      การเปลี่ยนแปลงผ่านชั้น store เดียวกัน
+      memory ui เปิดเว็บ UI ที่เข้าถึงได้เฉพาะ loopback (ค่าเริ่มต้น 127.0.0.1:8787)
+      สำหรับดู ค้นหา สร้าง แก้ไข และลบรายการ ใช้ที่เก็บข้อมูลเดียวกับ CLI และเขียนผ่านชั้น store เดียวกัน
     cmd: |
       memory ui
       memory ui --no-open
   philosophy:
-    label: ปรัชญา
+    label: แนวคิด
     yours_title: เป็นของคุณ
-    yours_body: ไฟล์บนดิสก์ ไม่ถูกล็อกกับผู้ให้บริการหรือ harness เดียว
-    pluggable_title: ปลั๊กได้
-    pluggable_body: skill, MCP และ hooks/plugins ทางการ โฟลเดอร์ความจำเดียวกัน
+    yours_body: ไฟล์บนดิสก์ ไม่ผูกกับผู้ให้บริการหรือแพลตฟอร์มเดียว
+    pluggable_title: เชื่อมต่อได้
+    pluggable_body: skill, MCP และการเชื่อมต่อสำหรับ Claude Code หรือ OpenCode ใช้โฟลเดอร์ความจำเดียวกัน
     portable_title: พกพาได้
-    portable_body: markdown ธรรมดา เปิดดูและแก้ได้ง่าย
-    small_title: เล็ก
-    small_body: ไบนารีเดียว สตาร์ทเร็ว (สำคัญเมื่อ hooks เรียก CLI บ่อย)
+    portable_body: Markdown ธรรมดา เปิดดูและแก้ไขได้ง่าย
+    small_title: เล็กและเร็ว
+    small_body: ไบนารีเดียว เริ่มทำงานได้รวดเร็ว
     vectorless_title: ไม่ใช้เวกเตอร์
-    vectorless_body: ไม่มี embedding ไม่มี sync daemon ไม่มี LLM ใน CLI
+    vectorless_body: ไม่มี embedding ไม่มี sync daemon และไม่มี LLM อยู่ใน CLI

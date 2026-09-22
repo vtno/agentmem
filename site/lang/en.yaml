@@ -18,7 +18,7 @@ common:
   harnesses:
     label: Supported harnesses
     claude_title: Claude Code
-    claude_desc: skill + hook · optional MCP →
+    claude_desc: skill + CLAUDE.md · optional MCP →
     opencode_title: OpenCode
     opencode_desc: skill + plugin · optional MCP →
     other_title: Other harnesses
@@ -66,6 +66,9 @@ index:
   cta_install: Installation Guide →
   cta_releases: GitHub Releases
   cta_issues: Report an issue
+  release:
+    label: Now available
+    body: agentmem v0.1.0 is available for macOS, Linux, and Windows. Install it with the command above or download it from GitHub Releases.
   why:
     label: Why
     yours_title: Yours
@@ -73,7 +76,7 @@ index:
     pluggable_title: Pluggable
     pluggable_body: skill or MCP install into the harness you already use
     portable_title: Portable
-    portable_body: switch agents; keep it's memory
+    portable_body: switch agents; keep the same memory
     vectorless_title: Vectorless
     vectorless_body: no embeddings, no daemon, no cloud required
   quick_start:
@@ -97,8 +100,8 @@ install:
   description: Install the agentmem memory binary and wire Claude Code, OpenCode, or any skill-capable harness.
   heading: Install
   lead: >
-    Get the memory binary on your PATH, then plug in a harness. Official targets add
-    enforcement (hooks/plugins); other agents use the portable skill.
+    Get the memory binary on your PATH, then connect a harness. Claude Code gets a skill
+    and managed CLAUDE.md guidance; OpenCode gets a skill and plugin. Other agents use the portable skill.
   recommended:
     label: Recommended
     oneliner: "One-liner (macOS / Linux):"
@@ -123,17 +126,17 @@ install:
       go install is not offered — the source repository is private.
   wire:
     label: Wire your agent
-    official: "Official harnesses (skill + enforcement):"
+    official: "Official harnesses:"
     official_cmd: |
       memory install claude-code
       memory install opencode
-    mcp: "MCP (hooks/plugins still installed on official targets):"
+    mcp: "MCP (also registers the MCP server; the normal guidance remains installed):"
     mcp_cmd: |
       memory install --mcp claude-code
       memory install --mcp opencode
     other: >
       Other harnesses — portable skill only under ~/.agents/skills
-      (no hooks/plugins; skill is not a harness name):
+      (no Claude Code guidance or OpenCode plugin; skill is not a harness name):
     other_cmd: |
       memory install skill
       memory install skill --dir /path/to/skills
@@ -204,9 +207,9 @@ commands:
     label: Harness
     install_title: memory install / uninstall
     install_body: >
-      Official harnesses: skill plus hooks/plugins by default; pass --mcp for MCP config
-      (hooks/plugins still applied). Portable skill target installs skill only under
-      ~/.agents/skills (or --dir) — no harness name, no hooks.
+      Claude Code installs a skill and managed CLAUDE.md guidance; OpenCode installs a skill
+      and plugin. Pass --mcp to also register the MCP server. Portable skill installs only under
+      ~/.agents/skills (or --dir) — no harness name or harness-specific integration.
     install_cmd: |
       memory install claude-code
       memory install --mcp opencode
@@ -215,7 +218,7 @@ commands:
       memory uninstall claude-code
       memory uninstall skill
     targets_title: memory targets
-    targets_body: List supported harnesses and install status (skill, mcp, hook/plugin), plus the portable skill path.
+    targets_body: List supported harnesses and install status (skill, MCP, guidance/plugin), plus the portable skill path.
     targets_cmd: memory targets
 
 integrations:
@@ -223,19 +226,19 @@ integrations:
   description: Wire agentmem into Claude Code, OpenCode, or any skill-capable harness.
   heading: Integrations
   lead: >
-    Official harnesses get skill plus enforcement (hooks/plugins). Other shell-capable agents
-    can still use the shared skill — without that enforcement layer.
+    Claude Code and OpenCode receive native integration in addition to the skill. Other shell-capable
+    agents can use the shared skill against the same local memory folder.
   claude:
     label: Claude Code · official
     body: >
-      Default install writes the memory skill and a SessionStart hook so the agent is reminded
-      to use memory across resume, clear, and compaction.
+      Default install writes the memory skill and manages an agentmem section in your user-level
+      ~/.claude/CLAUDE.md, so Claude Code has the memory instructions in every session.
     cmd: |
       memory install claude-code
       memory install --mcp claude-code
     note: >
-      Skill path suits shell-capable sessions. MCP suits sandboxed or MCP-first setups.
-      The SessionStart hook is installed in both modes.
+      Skill suits shell-capable sessions. MCP suits sandboxed or MCP-first setups. Both modes keep
+      the managed CLAUDE.md guidance; --mcp also registers memory serve in Claude settings.
   opencode:
     label: OpenCode · official
     body: >
@@ -249,7 +252,7 @@ integrations:
     body: >
       Any agent that can load a skill and run shell commands can use agentmem
       against the same local memory folder. There is no dedicated install target for these
-      harnesses — no SessionStart hook, no plugin, no automatic nudge to open or update memory.
+      harnesses — no Claude Code guidance, OpenCode plugin, or MCP configuration is written automatically.
     install_intro: "Install the skill (and only the skill) automatically:"
     cmd: |
       memory install skill
@@ -261,19 +264,19 @@ integrations:
       ~/.agents/skills/memory/SKILL.md. Use --dir to point at another
       skills root. Point your harness at that skill, keep memory on
       PATH, and you're done.
-    bullet_no_hook: No hook or plugin is installed — the agent is told how to use memory, not forced to
+    bullet_no_hook: No harness-specific integration is installed — the skill tells the agent how to use memory
     bullet_no_combo: Not combinable with a harness or --mcp (e.g. install skill claude-code errors)
     bullet_mcp: "Optional: register memory serve as MCP if the harness is sandboxed"
     bullet_rm: Remove later with memory uninstall skill (same --dir if you used one)
     prefer: >
-      Prefer full official installs when you can — hooks and plugins keep memory discipline
-      consistent across resume, clear, and compaction. Default path matches OpenCode's skill
+      Prefer the official installer when you use Claude Code or OpenCode — it adds the relevant
+      guidance or plugin. Default path matches OpenCode's skill
       root; uninstall skill removes that shared skill file (an OpenCode plugin may remain).
   skill_vs_mcp:
     label: Skill vs MCP
     skill: "Skill (default on harness) — agent runs shell memory … commands. Best when the harness has a real shell."
     mcp: "MCP (--mcp) — agent calls tools over the MCP server (memory serve). Better for sandboxed or shell-less harnesses."
-    hooks: "Hooks / plugins — official harnesses only. They enforce “check memory / save facts”; portable install skill does not."
+    hooks: "Native integration — Claude Code gets managed CLAUDE.md guidance; OpenCode gets a plugin. Portable install skill does not add either."
     note: >
       Check status anytime with memory targets. Remove with
       memory uninstall [--mcp] <harness> or
@@ -283,9 +286,10 @@ how_it_works:
   title: "How it works — agentmem"
   description: How agentmem stores memory as markdown files and a derived index.
   heading: How it works
+  video_title: agentmem overview
   lead: >
     Everything is a folder of markdown files you own. The CLI is a thin tool over that folder —
-    no database, no cloud, no embedding model. Harnesses plug in via skill, hooks, or MCP;
+    no database, no cloud, no embedding model. Harnesses plug in via skill, native integration, or MCP;
     the store stays the same when you switch tools.
   storage:
     label: Storage
@@ -334,10 +338,10 @@ how_it_works:
     yours_title: Yours
     yours_body: files on disk, not locked to a provider or single harness
     pluggable_title: Pluggable
-    pluggable_body: skill, MCP, and official hooks/plugins; same memory folder
+    pluggable_body: skill, MCP, and native Claude Code or OpenCode integration; same memory folder
     portable_title: Portable
     portable_body: plain markdown, easy to inspect and edit
     small_title: Small
-    small_body: one binary, fast startup (important when hooks call the CLI often)
+    small_body: one binary with fast startup
     vectorless_title: Vectorless
     vectorless_body: no embeddings, no sync daemon, no LLM inside the CLI

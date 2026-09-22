@@ -20,21 +20,21 @@ Or download the latest binary from [GitHub Releases](https://github.com/vtno/age
 
 ### Wire a harness
 
-Official (skill + enforcement hooks/plugins):
+Official harnesses:
 
 ```bash
 memory install claude-code
 memory install opencode
 ```
 
-MCP (plus the same hooks/plugins on official targets):
+MCP (also registers the MCP server; the normal guidance remains installed):
 
 ```bash
 memory install --mcp claude-code
 memory install --mcp opencode
 ```
 
-Other / skill-capable harnesses (portable skill only — no hooks or plugins):
+Other / skill-capable harnesses (portable skill only — no harness-specific integration):
 
 ```bash
 memory install skill
@@ -132,7 +132,7 @@ memory rm <name>              # delete a memory
 memory reindex                # rebuild MEMORY.md
 memory serve                  # MCP server over stdio
 memory ui                     # local loopback web UI
-memory install <harness>      # skill + hooks/plugins (claude-code, opencode)
+memory install <harness>      # Claude Code: skill + CLAUDE.md; OpenCode: skill + plugin
 memory install --mcp <harness>
 memory install skill [--dir <dir>]
 memory uninstall …
@@ -147,9 +147,9 @@ Everything lives in `~/.agentmem/` by default (override with `AGENTMEM_DIR`). Ea
 
 | Target | What you get |
 |--------|----------------|
-| **Claude Code** (official) | Skill + SessionStart hook · optional MCP |
+| **Claude Code** (official) | Skill + managed `CLAUDE.md` guidance · optional MCP |
 | **OpenCode** (official) | Skill + plugin · optional MCP |
-| **skill** (portable) | Skill only under `~/.agents/skills` — no enforcement |
+| **skill** (portable) | Skill only under `~/.agents/skills` — no harness-specific integration |
 
 ## Issues & releases
 

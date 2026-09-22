@@ -1,6 +1,6 @@
 # Integrations
 
-Official harnesses get skill plus enforcement (hooks/plugins). Other shell-capable agents can still use the shared skill — without that enforcement layer.
+Claude Code and OpenCode receive native integration in addition to the skill. Other shell-capable agents can use the shared skill against the same local memory folder.
 
 [← Home](/) · [Install](/docs/install) · [Commands](/docs/commands) · [How it works](/docs/how-it-works)
 
@@ -8,20 +8,20 @@ Official harnesses get skill plus enforcement (hooks/plugins). Other shell-capab
 
 | Target | Notes |
 |--------|--------|
-| [Claude Code](#claude-code) | Official — skill + SessionStart hook · optional MCP |
+| [Claude Code](#claude-code) | Official — skill + `CLAUDE.md` guidance · optional MCP |
 | [OpenCode](#opencode) | Official — skill + plugin · optional MCP |
-| [Other harnesses](#other-harnesses) | Skill only — no hook/plugin enforcement |
+| [Other harnesses](#other-harnesses) | Skill only — no harness-specific integration |
 
 ## Claude Code · official {#claude-code}
 
-Default install writes the memory skill and a SessionStart hook so the agent is reminded to use memory across resume, clear, and compaction.
+Default install writes the memory skill and manages an agentmem section in your user-level `~/.claude/CLAUDE.md`, so Claude Code has the memory instructions in every session.
 
 ```bash
 memory install claude-code
 memory install --mcp claude-code
 ```
 
-Skill path suits shell-capable sessions. MCP suits sandboxed or MCP-first setups. The SessionStart hook is installed in both modes.
+Skill suits shell-capable sessions. MCP suits sandboxed or MCP-first setups. Both modes keep the managed `CLAUDE.md` guidance; `--mcp` also registers `memory serve` in Claude settings.
 
 ## OpenCode · official {#opencode}
 
@@ -34,7 +34,7 @@ memory install --mcp opencode
 
 ## Other harnesses · skill only {#other}
 
-Any agent that can load a skill and run shell commands can use `agentmem` against the same local memory folder. There is no dedicated install target for these harnesses — no SessionStart hook, no plugin, no automatic nudge to open or update memory.
+Any agent that can load a skill and run shell commands can use `agentmem` against the same local memory folder. No Claude Code guidance, OpenCode plugin, or MCP configuration is written automatically for these harnesses.
 
 Install the skill (and only the skill) automatically:
 
@@ -46,18 +46,18 @@ memory install skill --dir /path/to/skills
 
 `skill` is not a harness name — it installs the portable skill only. Default path is under `~/.agents` for maximum compatibility: `~/.agents/skills/memory/SKILL.md`. Use `--dir` to point at another skills root. Point your harness at that skill, keep `memory` on `PATH`, and you’re done.
 
-- No hook or plugin is installed — the agent is told *how* to use memory, not forced to
+- No harness-specific integration is installed — the skill tells the agent how to use memory
 - Not combinable with a harness or `--mcp` (e.g. `install skill claude-code` errors)
 - Optional: register `memory serve` as MCP if the harness is sandboxed
 - Remove later with `memory uninstall skill` (same `--dir` if you used one)
 
-Prefer full official installs when you can — hooks and plugins keep memory discipline consistent across resume, clear, and compaction. Default path matches OpenCode’s skill root; `uninstall skill` removes that shared skill file (an OpenCode plugin may remain).
+Prefer the official installer when you use Claude Code or OpenCode — it adds the relevant guidance or plugin. Default path matches OpenCode’s skill root; `uninstall skill` removes that shared skill file (an OpenCode plugin may remain).
 
 ## Skill vs MCP
 
 - **Skill (default on harness)** — agent runs shell `memory …` commands. Best when the harness has a real shell.
 - **MCP (`--mcp`)** — agent calls tools over the MCP server (`memory serve`). Better for sandboxed or shell-less harnesses.
-- **Hooks / plugins** — official harnesses only. They enforce “check memory / save facts”; portable `install skill` does not.
+- **Native integration** — Claude Code gets managed `CLAUDE.md` guidance; OpenCode gets a plugin. Portable `install skill` does not add either.
 
 Check status anytime with `memory targets`. Remove with `memory uninstall [--mcp] <harness>` or `memory uninstall skill`.
 

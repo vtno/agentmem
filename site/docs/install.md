@@ -1,6 +1,6 @@
 # Install
 
-Get the `memory` binary on your PATH, then plug in a harness. Official targets add enforcement (hooks/plugins); other agents use the portable skill.
+Get the `memory` binary on your PATH, then connect a harness. Claude Code gets a skill and managed `CLAUDE.md` guidance; OpenCode gets a skill and plugin. Other agents use the portable skill.
 
 [← Home](/) · [Commands](/docs/commands) · [Integrations](/docs/integrations)
 
@@ -31,21 +31,21 @@ Checksums ship as `SHA256SUMS` on each release. Source install via `go install` 
 
 ## Wire your agent
 
-Official harnesses (skill + enforcement):
+Official harnesses:
 
 ```bash
 memory install claude-code
 memory install opencode
 ```
 
-MCP (hooks/plugins still installed on official targets):
+MCP (also registers the MCP server; the normal guidance remains installed):
 
 ```bash
 memory install --mcp claude-code
 memory install --mcp opencode
 ```
 
-Other harnesses — portable skill only under `~/.agents/skills` (no hooks/plugins; `skill` is not a harness name):
+Other harnesses — portable skill only under `~/.agents/skills` (no Claude Code guidance or OpenCode plugin; `skill` is not a harness name):
 
 ```bash
 memory install skill
